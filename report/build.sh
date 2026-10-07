@@ -6,5 +6,5 @@ pdflatex -interaction=nonstopmode -halt-on-error main.tex >/dev/null
 bibtex main >/dev/null
 pdflatex -interaction=nonstopmode -halt-on-error main.tex >/dev/null
 pdflatex -interaction=nonstopmode -halt-on-error main.tex >/dev/null
-cp main.pdf EAIDS_Report.pdf
-echo "Wrote report/EAIDS_Report.pdf"
+cp main.pdf MiniProject_EAIDS_Group2.pdf
+echo "Wrote report/MiniProject_EAIDS_Group2.pdf"
