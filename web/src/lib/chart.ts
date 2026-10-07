@@ -29,6 +29,9 @@ export const fmt = {
   pp: (v: number) => `${v >= 0 ? "+" : "−"}${Math.abs(v * 100).toFixed(1)} pp`,
 };
 
+/** Current root font size in px: the deck scales everything from this. */
+export const rem = () => parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+
 export interface Frame {
   svg: Svg;
   g: G;
@@ -36,6 +39,7 @@ export interface Frame {
   height: number;
   innerW: number;
   innerH: number;
+  r: number;
 }
 
 export interface Margin {
@@ -45,112 +49,84 @@ export interface Margin {
   left: number;
 }
 
-/** Create a fresh SVG sized to the container's current width. */
-export function frame(el: HTMLElement, aspect: number, margin: Margin, minH = 220, maxH = 460): Frame {
+/**
+ * Create a fresh SVG sized to the container. Margins are given in rem.
+ * Containers marked `data-fill` take their height from CSS (they fill the
+ * screen); others derive it from the width.
+ */
+export function frame(el: HTMLElement, aspect: number, m: Margin, minH = 200): Frame {
   el.querySelector("svg")?.remove();
-  const width = Math.max(280, el.clientWidth);
-  const height = Math.round(Math.min(maxH, Math.max(minH, width * aspect)));
-  const svg = select(el)
-    .append("svg")
-    .attr("viewBox", `0 0 ${width} ${height}`)
-    .attr("width", width)
-    .attr("height", height)
-    .attr("role", "img") as Svg;
+  const r = rem();
+  const width = Math.max(240, el.clientWidth);
+  const height = el.hasAttribute("data-fill") ? Math.max(minH, el.clientHeight) : Math.max(minH, Math.round(width * aspect));
+  const margin = { top: m.top * r, right: m.right * r, bottom: m.bottom * r, left: m.left * r };
+  const svg = select(el).append("svg").attr("viewBox", `0 0 ${width} ${height}`).attr("width", width).attr("height", height).attr("role", "img") as Svg;
   const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`) as G;
-  return {
-    svg,
-    g,
-    width,
-    height,
-    innerW: width - margin.left - margin.right,
-    innerH: height - margin.top - margin.bottom,
-  };
+  return { svg, g, width, height, innerW: width - margin.left - margin.right, innerH: height - margin.top - margin.bottom, r };
 }
 
-/** Minimal axes in the house style: hairline gridlines, mono tick labels. */
+/** Hairline gridlines with mono tick labels. */
 export function yAxis(
-  g: G,
+  f: Frame,
   y: ScaleContinuousNumeric<number, number>,
-  innerW: number,
   ticks: number[],
   label: (v: number) => string,
   title?: string,
 ): void {
-  const ax = g.append("g").attr("class", "grid");
+  const ax = f.g.append("g").attr("class", "grid");
   ticks.forEach((t) => {
-    ax.append("line").attr("x1", 0).attr("x2", innerW).attr("y1", y(t)).attr("y2", y(t));
-    ax.append("text")
-      .attr("class", "tick-label")
-      .attr("x", -8)
-      .attr("y", y(t))
-      .attr("dy", "0.32em")
-      .attr("text-anchor", "end")
-      .text(label(t));
+    ax.append("line").attr("x1", 0).attr("x2", f.innerW).attr("y1", y(t)).attr("y2", y(t));
+    ax.append("text").attr("class", "tick-label").attr("x", -0.5 * f.r).attr("y", y(t)).attr("dy", "0.32em").attr("text-anchor", "end").text(label(t));
   });
-  if (title) {
-    g.append("text").attr("class", "axis-title").attr("x", 0).attr("y", -14).text(title);
-  }
+  if (title) f.g.append("text").attr("class", "axis-title").attr("x", 0).attr("y", -0.9 * f.r).text(title);
 }
 
 export function xAxis(
-  g: G,
+  f: Frame,
   x: ScaleContinuousNumeric<number, number>,
-  innerH: number,
   ticks: number[],
   label: (v: number) => string,
   title?: string,
 ): void {
-  const ax = g.append("g").attr("class", "axis").attr("transform", `translate(0,${innerH})`);
+  const ax = f.g.append("g").attr("class", "axis").attr("transform", `translate(0,${f.innerH})`);
   ax.append("line").attr("x1", x.range()[0]).attr("x2", x.range()[1]);
   ticks.forEach((t) => {
-    ax.append("line").attr("x1", x(t)).attr("x2", x(t)).attr("y1", 0).attr("y2", 5);
-    ax.append("text")
-      .attr("class", "tick-label")
-      .attr("x", x(t))
-      .attr("y", 18)
-      .attr("text-anchor", "middle")
-      .text(label(t));
+    ax.append("line").attr("x1", x(t)).attr("x2", x(t)).attr("y1", 0).attr("y2", 0.3 * f.r);
+    ax.append("text").attr("class", "tick-label").attr("x", x(t)).attr("y", 1.2 * f.r).attr("text-anchor", "middle").text(label(t));
   });
   if (title) {
-    ax.append("text")
-      .attr("class", "axis-title")
-      .attr("x", x.range()[1])
-      .attr("y", 36)
-      .attr("text-anchor", "end")
-      .text(title);
+    ax.append("text").attr("class", "axis-title").attr("x", x.range()[1]).attr("y", 2.35 * f.r).attr("text-anchor", "end").text(title);
   }
 }
 
 /** Dashed programme thresholds (55th: referred, 97th: auto-identified). */
-export function thresholds(g: G, x: ScaleContinuousNumeric<number, number>, innerH: number, compact = false): void {
-  const t = g.append("g").attr("class", "thr");
+export function thresholds(f: Frame, x: ScaleContinuousNumeric<number, number>, compact = false): void {
+  const t = f.g.append("g").attr("class", "thr");
   [
-    { p: 55, label: compact ? "55th" : "55th · referred to PCP" },
+    { p: 55, label: compact ? "55th" : "55th · referred" },
     { p: 97, label: compact ? "97th" : "97th · auto-identified" },
   ].forEach(({ p, label }) => {
-    t.append("line").attr("x1", x(p)).attr("x2", x(p)).attr("y1", 0).attr("y2", innerH);
-    t.append("text")
-      .attr("x", x(p) - 5)
-      .attr("y", 2)
-      .attr("text-anchor", "end")
-      .attr("dominant-baseline", "hanging")
-      .text(label);
+    t.append("line").attr("x1", x(p)).attr("x2", x(p)).attr("y1", 0).attr("y2", f.innerH);
+    t.append("text").attr("x", x(p) - 0.35 * f.r).attr("y", 0.2 * f.r).attr("text-anchor", "end").attr("dominant-baseline", "hanging").text(label);
   });
 }
 
-/** Re-run a draw function whenever the element changes width. */
+/** Draw now (if visible) and again whenever the element's box changes. */
 export function responsive(el: HTMLElement, draw: () => void): void {
-  // Draw once immediately; ResizeObserver callbacks can be delayed in background tabs.
-  draw();
-  let last = el.clientWidth;
-  const ro = new ResizeObserver(() => {
+  let lastW = 0;
+  let lastH = 0;
+  const run = () => {
     const w = el.clientWidth;
-    if (Math.abs(w - last) > 2) {
-      last = w;
+    const h = el.clientHeight;
+    if (w === 0) return;
+    if (Math.abs(w - lastW) > 2 || Math.abs(h - lastH) > 2) {
+      lastW = w;
+      lastH = h;
       draw();
     }
-  });
-  ro.observe(el);
+  };
+  run();
+  new ResizeObserver(run).observe(el);
 }
 
 export function segmented(
@@ -173,4 +149,13 @@ export function segmented(
     });
     el.appendChild(b);
   });
+}
+
+/** Push overlapping right-edge labels apart vertically. */
+export function spread<T extends { y: number }>(labels: T[], gap: number): T[] {
+  labels.sort((a, b) => a.y - b.y);
+  for (let i = 1; i < labels.length; i++) {
+    if (labels[i].y - labels[i - 1].y < gap) labels[i].y = labels[i - 1].y + gap;
+  }
+  return labels;
 }

@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "screenshots": "node scripts/screenshots.mjs"
+    "screenshots": "node scripts/screenshots.mjs",
+    "explanation": "node scripts/explanation-pdf.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",
@@ -17,7 +18,8 @@
     "d3-format": "^3.1.2",
     "d3-scale": "^4.0.2",
     "d3-selection": "^3.0.0",
-    "d3-shape": "^3.2.0"
+    "d3-shape": "^3.2.0",
+    "qrcode": "^1.5.4"
   },
   "devDependencies": {
     "@types/d3-array": "^3.2.2",
@@ -25,6 +27,7 @@
     "@types/d3-scale": "^4.0.9",
     "@types/d3-selection": "^3.0.12",
     "@types/d3-shape": "^3.2.0",
+    "@types/qrcode": "^1.5.6",
     "playwright-core": "^1.63.0",
     "typescript": "^7.0.2",
     "vite": "^8.3.3"

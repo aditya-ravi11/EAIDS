@@ -9,10 +9,7 @@
       content="An algorithmic impact assessment and regulatory review of cost-as-a-proxy healthcare risk scores: a reproducible bias audit, an accountability framework for deploying hospitals, and a US / EU / India regulatory comparison."
     />
     <meta property="og:title" content="From Audit to Accountability" />
-    <meta
-      property="og:description"
-      content="Who should have caught a biased hospital risk score, and would today's laws in the US, EU and India make them?"
-    />
+    <meta property="og:description" content="Who should have caught a biased hospital risk score, and would today's laws in the US, EU and India make them?" />
     <meta name="theme-color" content="#f7f4ec" />
     <link
       rel="icon"
@@ -21,599 +18,490 @@
     <script type="module" src="/src/main.ts"></script>
   </head>
   <body>
-    <header class="masthead">
-      <div class="masthead-inner">
-        <span>EAIDS Mini-Project · Batch B2</span>
-        <span>Case file: cost-as-proxy risk scores · as of 7 Oct 2026</span>
+    <header class="topbar">
+      <a class="brand" href="#/cover">
+        <i class="brand-mark" aria-hidden="true"></i>
+        <span><strong>From Audit to Accountability</strong><em>EAIDS · Group 2 · B2</em></span>
+      </a>
+      <nav class="tabs" aria-label="Sections" id="tabs"></nav>
+      <div class="tools">
+        <button class="tool" id="notes-btn" type="button" aria-pressed="false" title="Details (N)">Details <kbd>N</kbd></button>
+        <button class="tool tool-strong" id="present-btn" type="button" title="Present (P)">Present <kbd>P</kbd></button>
       </div>
     </header>
 
-    <section class="hero" aria-labelledby="title">
-      <div>
-        <p class="kicker">An algorithmic impact assessment &amp; regulatory review</p>
-        <h1 id="title">From Audit to <em>Accountability</em></h1>
-        <p class="dek">
-          A risk score used by US hospitals predicted who would <em>cost</em> the most, and was used to decide who was
-          <em>sickest</em>. We re-run the audit, then ask the harder questions: who should have stopped it, what
-          assessment should have come first, and would the law in the US, the EU or India require one today?
-        </p>
-        <div class="byline">
-          <div><strong>Aditya Ravi</strong><span>16014223004 · B2</span></div>
-          <div><strong>Aayush Tiwari</strong><span>16014223003 · B2</span></div>
-          <div><strong>Atharva Indulkar</strong><span>16014223022 · B2</span></div>
-        </div>
-        <p class="hero-meta">
-          Code &amp; report:
-          <a href="https://github.com/aditya-ravi11/EAIDS">github.com/aditya-ravi11/EAIDS</a> · Data: synthetic
-          replica of the Obermeyer et al. cohort, <span data-num="meta.n" data-fmt="int"></span> patient-years
-        </p>
-      </div>
-
-      <figure class="units" id="units" aria-label="Programme places by race under two rankings">
-        <div class="units-head">
-          <div class="units-count"></div>
-          <div class="units-label"></div>
-        </div>
-        <div class="unit-grid" aria-hidden="true"></div>
-        <div class="units-foot">
-          <div data-control></div>
-          <div class="legend"><span><i class="k-black"></i>Black</span><span><i class="k-white"></i>White</span></div>
-        </div>
-      </figure>
-    </section>
-
-    <div class="layout">
-      <nav class="rail" aria-label="Sections">
-        <ol>
-          <li><a href="#problem"><span>§01</span><span>Problem definition</span></a></li>
-          <li><a href="#objectives"><span>§02</span><span>Objectives</span></a></li>
-          <li><a href="#background"><span>§03</span><span>Background</span></a></li>
-          <li><a href="#issues"><span>§04</span><span>Ethical issues</span></a></li>
-          <li><a href="#analysis"><span>§05</span><span>Methodology &amp; analysis</span></a></li>
-          <li><a href="#principles"><span>§06</span><span>Ethical principles</span></a></li>
-          <li><a href="#recommendations"><span>§07</span><span>Recommendations</span></a></li>
-          <li><a href="#results"><span>§08</span><span>Results &amp; findings</span></a></li>
-          <li><a href="#conclusion"><span>§09</span><span>Conclusion</span></a></li>
-        </ol>
-        <div class="rail-foot">
-          Status of law checked<br />7 October 2026.<br />Not legal advice.<br /><br />
-          <a href="https://github.com/aditya-ravi11/EAIDS">Source on GitHub</a>
-        </div>
-      </nav>
-
-      <main>
-        <!-- §01 ------------------------------------------------------------ -->
-        <section class="sec" id="problem">
-          <header class="sec-head">
-            <div class="sec-no">§01</div>
-            <div class="sec-kicker">Problem definition</div>
-            <h2>A score that measures spending, used as if it measured sickness</h2>
-          </header>
-          <div class="prose">
-            <p class="lede">
-              Hospitals and insurers run <em>high-risk care-management</em> programmes: extra nurses, priority
-              appointments and closer follow-up for the patients most likely to deteriorate. Places are scarce, so
-              patients are ranked by a commercial risk score. In the system studied by Obermeyer and colleagues, anyone
-              at or above the 97th percentile was identified for enrolment automatically, and anyone above the 55th was
-              flagged to their primary-care doctor<a class="cite" data-ref="obermeyer2019"></a>. Tools in this class
-              are applied to roughly 200 million people in the US each year.
+    <main id="deck">
+      <!-- COVER ============================================================ -->
+      <section class="screen" data-screen="cover" data-label="Cover">
+        <div class="cover">
+          <div class="cover-text">
+            <p class="kicker">EAIDS mini-project · Algorithmic impact assessment &amp; regulatory review</p>
+            <h1>From Audit to <em>Accountability</em></h1>
+            <p class="dek">
+              A hospital risk score predicted who would <em>cost</em> the most and was used to decide who was
+              <em>sickest</em>. We re-run the audit, design the assessment that should have caught it, and test whether
+              US, EU and Indian law would require it today.
             </p>
-            <aside class="sidenote">
-              <b>Naming the vendor</b>The Science paper does not name the product. It was identified in press coverage
-              and in a New York regulators' letter as Optum's Impact Pro<a class="cite" data-ref="dfs2019"></a>.
-            </aside>
-            <p>
-              The score was trained to predict next year's <strong>medical cost</strong>. Cost was treated as a proxy
-              for health need, on the reasonable-sounding logic that sicker people use more care. But in the US,
-              Black patients with the same illness burden receive less care and so generate less spending, because of
-              unequal access, insurance, distance, time off work and trust. A model that predicts cost
-              <em>accurately</em> therefore ranks Black patients as healthier than they are. Race was never an input;
-              the bias came from the <mark>choice of label</mark>.
-            </p>
-            <p>
-              The bias is now well known. What remains open is the governance question this project addresses:
-              <strong
-                >what should a deploying hospital have done before switching the tool on, who is accountable for the
-                harm, and would current US, EU and Indian frameworks have forced anyone to look?</strong
-              >
+            <ul class="team">
+              <li><strong>Aditya Ravi</strong><span>16014223004</span></li>
+              <li><strong>Aayush Tiwari</strong><span>16014223003</span></li>
+              <li><strong>Atharva Indulkar</strong><span>16014223022</span></li>
+            </ul>
+            <p class="cover-meta">
+              Batch B2 · Data: synthetic replica of the Obermeyer et al. cohort, <span data-num="meta.n" data-fmt="int"></span> patient-years ·
+              <a href="https://github.com/aditya-ravi11/EAIDS">github.com/aditya-ravi11/EAIDS</a>
             </p>
           </div>
-          <div class="stats">
-            <div class="stat">
-              <div class="stat-value is-black" data-num="calibration.gap_health.est" data-fmt="signed2"></div>
-              <div class="stat-label">
-                more active chronic conditions for Black patients than White patients <em>at the same risk score</em>
-                <span class="num">(95% CI <span data-num="calibration.gap_health.lo" data-fmt="num2"></span>–<span data-num="calibration.gap_health.hi" data-fmt="num2"></span>)</span>
-              </div>
+          <figure class="units" id="units" aria-label="Programme places by race under two rankings">
+            <figcaption class="units-cap">If the programme had 100 places…</figcaption>
+            <div class="units-head">
+              <div class="units-count"></div>
+              <div class="units-label"></div>
             </div>
-            <div class="stat">
-              <div class="stat-value" data-num="mechanism.gap_cost.est" data-fmt="usdneg"></div>
-              <div class="stat-label">
-                spent per year on a Black patient compared with an equally sick White patient
-                <span class="num">(CI <span data-num="mechanism.gap_cost.lo" data-fmt="usdneg"></span> to <span data-num="mechanism.gap_cost.hi" data-fmt="usdneg"></span>)</span>
-              </div>
+            <div class="unit-grid" aria-hidden="true"></div>
+            <div class="units-foot">
+              <div data-control></div>
+              <div class="legend"><span><i class="k-black"></i>Black</span><span><i class="k-white"></i>White</span></div>
             </div>
-            <div class="stat">
-              <div class="stat-value is-black">
-                <span data-num="swap.at97.before" data-fmt="pct0"></span>→<span data-num="swap.at97.fixed" data-fmt="pct0"></span>
-              </div>
-              <div class="stat-label">
-                Black share of the auto-identified group, before and after replacing healthier White patients with
-                sicker Black patients (corrected code; authors' top-4% binning)
-              </div>
-            </div>
-          </div>
-          <p class="pull">The algorithm was not wrong about cost. It was wrong about what cost means.</p>
-        </section>
+          </figure>
+        </div>
+        <p class="cover-hint">Press <kbd>→</kbd> to begin · <kbd>P</kbd> to present · <kbd>N</kbd> for details</p>
+      </section>
 
-        <!-- §02 ------------------------------------------------------------ -->
-        <section class="sec" id="objectives">
-          <header class="sec-head">
-            <div class="sec-no">§02</div>
-            <div class="sec-kicker">Objectives</div>
-            <h2>Five questions, from the data to the statute book</h2>
-          </header>
-          <ol class="olist">
+      <!-- §01 PROBLEM ======================================================= -->
+      <section class="screen" data-screen="problem" data-label="Problem" data-no="01">
+        <header class="screen-head">
+          <p class="kicker"><span>§01</span>Problem definition</p>
+          <h2>A score that measures spending, used as if it measured sickness</h2>
+        </header>
+        <div class="screen-body problem">
+          <ol class="facts">
             <li>
-              <strong>Reproduce the audit</strong
-              ><span>Re-implement the original diagnostics on the public synthetic cohort, including the 2022 code correction, and check our numbers against the authors' own.</span>
+              <b>The programme</b>
+              <p>Hospitals give their highest-risk patients extra nursing, priority appointments and follow-up. A commercial score ranks everyone: the <strong>top 3%</strong> are auto-identified and the top 45% are referred to their doctor. Tools of this class score <strong>~200 million</strong> people a year in the US.</p>
             </li>
             <li>
-              <strong>Isolate the label</strong
-              ><span>Train one model class on three labels with identical features to show the bias comes from what is predicted, not from the model.</span>
+              <b>The proxy</b>
+              <p>The score predicts <strong>next year's medical cost</strong> and treats it as a stand-in for health need. Race is never an input.</p>
             </li>
             <li>
-              <strong>Design the missing assessment</strong
-              ><span>Specify the algorithmic impact assessment a hospital should have run before deployment, with measurable pass criteria.</span>
-            </li>
-            <li>
-              <strong>Assign accountability</strong
-              ><span>Map who is responsible and who is accountable across the vendor, hospital, clinicians, payer, patients and regulators.</span>
-            </li>
-            <li>
-              <strong>Test the law</strong
-              ><span>Code US, EU and Indian obligations for 2019 and 2026 and ask whether each would have required the assessment that was missing.</span>
+              <b>The harm</b>
+              <p>At the same level of illness, less is spent on Black patients because of unequal access. An accurate cost model therefore ranks them as <strong>healthier than they are</strong>, and they are under-referred.</p>
             </li>
           </ol>
-        </section>
-
-        <!-- §03 ------------------------------------------------------------ -->
-        <section class="sec" id="background">
-          <header class="sec-head">
-            <div class="sec-no">§03</div>
-            <div class="sec-kicker">Background &amp; context</div>
-            <h2>How a cost prediction becomes a care decision</h2>
-          </header>
-          <div class="prose">
-            <p>
-              Population-health risk scores sit between insurance claims and the clinic. A vendor trains a model on
-              historical claims; a hospital or payer licenses it, picks enrolment thresholds and passes the flagged list
-              to care managers. Each hand-off is a place where someone could have asked what the score actually
-              measures. Nobody in the chain was required to.
-            </p>
-          </div>
           <div class="pipeline" role="list" aria-label="Decision pipeline">
-            <div class="pipe" role="listitem"><b>Input</b><strong>Claims history</strong>Diagnoses, procedures, costs, labs and medications from year t − 1.</div>
-            <div class="pipe is-flaw" role="listitem"><b>Design</b><strong>Label = future cost</strong>The model is trained to predict total spending in year t.</div>
-            <div class="pipe" role="listitem"><b>Output</b><strong>Risk score</strong>Proprietary and calibrated on cost. Race is not an input.</div>
-            <div class="pipe" role="listitem"><b>Policy</b><strong>Thresholds</strong>≥ 97th percentile: auto-identified. ≥ 55th: referred to the GP.</div>
-            <div class="pipe" role="listitem"><b>Review</b><strong>Clinician check</strong>Care managers confirm or decline the referral.</div>
-            <div class="pipe" role="listitem"><b>Outcome</b><strong>Enrolment</strong>Extra care for the few who make the list.</div>
+            <div class="pipe" role="listitem"><span class="owner">Payer · EHR</span><strong>Claims history</strong><small>diagnoses, costs, labs, drugs (year t − 1)</small></div>
+            <div class="pipe is-flaw" role="listitem"><span class="owner">Vendor</span><strong>Label = future cost</strong><small>the design choice that encodes the bias</small></div>
+            <div class="pipe" role="listitem"><span class="owner">Vendor</span><strong>Risk score</strong><small>proprietary, race-blind, accurate on cost</small></div>
+            <div class="pipe" role="listitem"><span class="owner">Hospital</span><strong>Thresholds</strong><small>≥ 97th auto-identified · ≥ 55th referred</small></div>
+            <div class="pipe" role="listitem"><span class="owner">Clinicians</span><strong>Review</strong><small>care managers confirm or decline</small></div>
+            <div class="pipe" role="listitem"><span class="owner">Patient</span><strong>Enrolment</strong><small>extra care for the few on the list</small></div>
           </div>
-          <div class="owners" aria-hidden="true">
-            <span>Payer / EHR</span><span>Vendor</span><span>Vendor</span><span>Hospital</span><span>Clinicians</span><span>Patient</span>
+          <div class="kpis">
+            <div class="kpi"><div class="kpi-v is-black" data-num="calibration.gap_health.est" data-fmt="signed2"></div><div class="kpi-l">more chronic conditions for Black patients <em>at the same score</em></div></div>
+            <div class="kpi"><div class="kpi-v" data-num="mechanism.gap_cost.est" data-fmt="usdneg"></div><div class="kpi-l">spent a year on a Black patient vs an equally sick White patient</div></div>
+            <div class="kpi"><div class="kpi-v is-black"><span data-num="swap.at97.before" data-fmt="pct0"></span>→<span data-num="swap.at97.fixed" data-fmt="pct0"></span></div><div class="kpi-l">Black share of the auto-identified group if sicker patients replaced healthier ones</div></div>
           </div>
+          <p class="question"><b>The open question.</b> The bias is known. Who should have caught it, what assessment was missing, and would US, EU or Indian law require it today?</p>
+        </div>
+        <template class="notes">
+          <h4>Context</h4>
+          <p>Obermeyer, Powers, Vogeli and Mullainathan (<em>Science</em>, 2019) studied a commercial care-management score used by a large US health system. The paper did not name the vendor; it was identified in press coverage and in a New York regulators' letter as Optum's Impact Pro.</p>
+          <p>The ~200 million figure is the authors' industry estimate for the whole class of such tools, not for one product.</p>
+          <h4>Why it matters</h4>
+          <p>Places in care-management programmes are scarce. A score that systematically under-ranks one group withholds preventive care from patients who are sicker than those who receive it.</p>
+        </template>
+      </section>
 
-          <h3>Timeline: from discovery to the 2026 rulebook</h3>
-          <ol class="timeline" id="timeline"></ol>
-        </section>
+      <!-- §02 OBJECTIVES ==================================================== -->
+      <section class="screen" data-screen="objectives" data-label="Objectives" data-no="02">
+        <header class="screen-head">
+          <p class="kicker"><span>§02</span>Objectives</p>
+          <h2>Six objectives, from the data to the statute book</h2>
+        </header>
+        <ol class="screen-body objectives">
+          <li><b>01</b><strong>Reproduce the audit</strong><p>Re-implement the original diagnostics on the public synthetic cohort, including the 2022 code correction, and check against the authors' own outputs.</p><a href="#/analysis/calibration">§05 Analysis →</a></li>
+          <li><b>02</b><strong>Isolate the label</strong><p>Train one model on three different targets with identical features to show the bias comes from <em>what</em> is predicted.</p><a href="#/results/labels">§08 Results →</a></li>
+          <li><b>03</b><strong>Design the missing assessment</strong><p>Specify a pre-deployment algorithmic impact assessment with measurable pass criteria.</p><a href="#/recommendations/aia">§07 AIA →</a></li>
+          <li><b>04</b><strong>Assign accountability</strong><p>Map who is responsible and who is accountable: vendor, hospital, clinicians, payer, patients, regulator.</p><a href="#/recommendations/raci">§07 Matrix →</a></li>
+          <li><b>05</b><strong>Test the law</strong><p>Code US, EU and Indian obligations for 2019, 2026 and 2027 and ask whether each would require the missing check.</p><a href="#/results/law">§08 Law →</a></li>
+          <li><b>06</b><strong>Make it demonstrable</strong><p>Generate every number, chart and table from one reproducible pipeline that feeds both this dashboard and the IEEE report.</p><a href="https://github.com/aditya-ravi11/EAIDS">Code →</a></li>
+        </ol>
+      </section>
 
-        <!-- §04 ------------------------------------------------------------ -->
-        <section class="sec" id="issues">
-          <header class="sec-head">
-            <div class="sec-no">§04</div>
-            <div class="sec-kicker">Ethical issue identification</div>
-            <h2>The charge sheet: eight failures, three of them about governance</h2>
-          </header>
-          <div class="prose">
-            <p>
-              We separate harms that arise in <em>design</em> (what the model predicts), in <em>deployment</em> (how
-              the hospital uses it) and in <em>governance</em> (who checks, who answers). Severity reflects scale,
-              reversibility and how directly the issue produced the disparity.
-            </p>
+      <!-- §03 BACKGROUND ==================================================== -->
+      <section class="screen" data-screen="background" data-label="Background" data-no="03">
+        <header class="screen-head">
+          <p class="kicker"><span>§03</span>Background &amp; context</p>
+          <h2>Seven years from discovery: more rules, few that bite</h2>
+        </header>
+        <div class="screen-body background">
+          <div class="bg-facts">
+            <div><b>2019</b><p>Bias published in <em>Science</em>; New York regulators and US senators demand answers.</p></div>
+            <div><b>Fix exists</b><p>The vendor's own re-test on 3.7 M patients cut the bias <strong>84%</strong> with a combined health-and-cost label.</p></div>
+            <div><b>2022</b><p>A bug fix in the authors' code makes the counterfactual finding <strong>stronger</strong> (47% → 59%).</p></div>
+            <div><b>2024–26</b><p>New AI rules in all three jurisdictions, but several were delayed, narrowed or repealed before they could apply.</p></div>
           </div>
-          <div class="charges" id="charges"></div>
-        </section>
-
-        <!-- §05 ------------------------------------------------------------ -->
-        <section class="sec" id="analysis">
-          <header class="sec-head">
-            <div class="sec-no">§05</div>
-            <div class="sec-kicker">Methodology &amp; analysis</div>
-            <h2>Re-running the audit, step by step</h2>
-          </header>
-          <div class="prose">
-            <p>
-              The original patient data cannot be shared, so the authors released a <strong>synthetic cohort</strong>
-              generated with the <em>synthpop</em> package: <span class="num" data-num="meta.n" data-fmt="int"></span>
-              patient-years, <span class="num" data-num="meta.n_black" data-fmt="int"></span> of them Black
-              (<span class="num" data-num="meta.share_black" data-fmt="pct1"></span>), with the commercial score,
-              programme enrolment, costs, chronic-condition counts, biomarkers and <span class="num" data-num="labels.n_features" data-fmt="int"></span> year t − 1 features
-              <a class="cite" data-ref="labsysmed"></a>. It reproduces the structure of the original, not its exact
-              magnitudes, so every figure below is shown next to the published value where one exists.
-            </p>
-            <aside class="sidenote">
-              <b>Reproducibility</b>All numbers on this page are generated by <code>analysis/run_all.py</code> and
-              read from JSON at build time. The raw CSV is downloaded on demand and never redistributed.
-            </aside>
-            <ol>
-              <li><strong>Calibration audit.</strong> Compare mean health and mean cost across score percentiles by race. The within-percentile gap is estimated by OLS with percentile fixed effects, with 1,000-draw bootstrap intervals.</li>
-              <li><strong>Mechanism.</strong> Compare spending for Black and White patients with the same number of active chronic conditions.</li>
-              <li><strong>Biomarkers.</strong> Repeat the calibration check on HbA1c, blood pressure, creatinine, hematocrit and LDL.</li>
-              <li><strong>Counterfactual swap.</strong> Re-implement the authors' exercise, both as published and with the 2022 correction.</li>
-              <li><strong>Label choice.</strong> Fit LASSO (10-fold CV, standardised features, race excluded) on a 60/40 split to predict log total cost, log avoidable cost, and active chronic conditions.</li>
-              <li><strong>Selection fairness.</strong> At each threshold, compare who is selected with who is <em>truly high-need</em>: the same number of patients ranked by realised chronic conditions.</li>
-            </ol>
-          </div>
-
-          <figure class="fig" id="fig-calibration">
-            <div class="fig-head">
-              <div>
-                <span class="fig-no">Fig. 5.1 · Calibration by race</span>
-                <h4 class="fig-title"></h4>
-                <p class="fig-sub"></p>
+          <div class="swimlanes" id="timeline">
+            <div class="lanes-chart"></div>
+            <div class="lanes-foot">
+              <div class="lanes-key">
+                <span><i class="tk event"></i>Event</span><span><i class="tk law"></i>Binding law</span><span><i class="tk guidance"></i>Guidance / proposal</span><span><i class="tk future"></i>Scheduled</span>
               </div>
-              <div data-control></div>
+              <div class="lanes-detail" aria-live="polite"></div>
             </div>
-            <div class="fig-body"><div class="chart"></div></div>
-            <div class="fig-foot">
-              <details>
-                <summary>How this was computed</summary>
-                <p>
-                  Percentiles are ranks of <code>risk_score_t</code> (0–99). Within-percentile gap from
-                  <code>y ~ black + C(percentile)</code>: health
-                  <span class="num" data-num="calibration.gap_health.est" data-fmt="signed2"></span> conditions
-                  (<span class="num" data-num="calibration.gap_health.lo" data-fmt="num2"></span>,
-                  <span class="num" data-num="calibration.gap_health.hi" data-fmt="num2"></span>); cost
-                  <span class="num" data-num="calibration.gap_cost.est" data-fmt="usdsigned"></span>
-                  (<span class="num" data-num="calibration.gap_cost.lo" data-fmt="usdsigned"></span>,
-                  <span class="num" data-num="calibration.gap_cost.hi" data-fmt="usdsigned"></span>), an interval that
-                  includes zero. Bootstrap: 1,000 row resamples, seed 0.
-                </p>
-              </details>
-            </div>
-          </figure>
-
-          <div class="prose">
-            <p>
-              The two panels are the whole story in miniature. On <strong>cost</strong>, the lines overlap: the score
-              is well calibrated across races, which is exactly how a vendor would validate it. On
-              <strong>health</strong>, the Black line sits above the White line at every percentile. Among patients
-              at or above the 97th percentile, Black patients carry
-              <span class="num" data-num="calibration.top3.conditions_black" data-fmt="num1"></span> active chronic
-              conditions against <span class="num" data-num="calibration.top3.conditions_white" data-fmt="num1"></span>
-              for White patients, <span class="num" data-num="calibration.top3.rel_gap" data-fmt="pct0"></span>
-              more (published: 4.8 vs 3.8, +26%).
-            </p>
           </div>
+        </div>
+      </section>
 
-          <figure class="fig" id="fig-mechanism">
-            <div class="fig-head">
-              <div>
-                <span class="fig-no">Fig. 5.2 · Mechanism</span>
-                <h4 class="fig-title">For most patients, less is spent on Black patients at the same level of illness</h4>
-                <p class="fig-sub">Mean total cost in year t by number of active chronic conditions. Black spending is lower at every level up to five conditions, which covers <span data-num="mechanism.black_share_le5" data-fmt="pct0"></span> of Black patient-years. Above that the groups are small and noisy. Spending is the label, so this gap becomes the bias.</p>
+      <!-- §04 ETHICAL ISSUES ================================================ -->
+      <section class="screen" data-screen="issues" data-label="Ethical issues" data-no="04">
+        <header class="screen-head">
+          <p class="kicker"><span>§04</span>Ethical issue identification</p>
+          <h2>Eight failures across design, deployment and governance</h2>
+        </header>
+        <div class="screen-body issues" id="charges"></div>
+        <template class="notes">
+          <h4>How we classified the issues</h4>
+          <p>We separate harms that arise in <em>design</em> (what the model predicts), in <em>deployment</em> (how the hospital uses it) and in <em>governance</em> (who checks and who answers). Severity reflects scale, reversibility and how directly the issue produced the disparity.</p>
+          <p>The "problem of many hands" is Nissenbaum's term for diffuse responsibility in computerised systems: when every actor controls one link, no one owns the outcome.</p>
+        </template>
+      </section>
+
+      <!-- §05 ANALYSIS ====================================================== -->
+      <section class="screen has-steps" data-screen="analysis" data-label="Analysis" data-no="05">
+        <header class="screen-head compact">
+          <p class="kicker"><span>§05</span>Methodology &amp; analysis</p>
+          <nav class="steps" aria-label="Analysis steps"></nav>
+        </header>
+        <div class="screen-body stage">
+          <article class="step" data-step="data" data-label="Data & approach">
+            <div class="step-head"><h3>Seven checks on a public replica of the original cohort</h3></div>
+            <div class="method">
+              <div class="data-card">
+                <div class="big-num" data-num="meta.n" data-fmt="int"></div>
+                <div class="data-l">patient-years · synthetic replica released by the original authors</div>
+                <dl>
+                  <dt>Black patients</dt><dd><span data-num="meta.n_black" data-fmt="int"></span> (<span data-num="meta.share_black" data-fmt="pct1"></span>)</dd>
+                  <dt>Features, year t − 1</dt><dd><span data-num="labels.n_features" data-fmt="int"></span></dd>
+                  <dt>Train / hold-out</dt><dd><span data-num="labels.n_train" data-fmt="int"></span> / <span data-num="labels.n_holdout" data-fmt="int"></span></dd>
+                  <dt>Bootstrap draws</dt><dd>1,000</dd>
+                </dl>
               </div>
+              <ol class="method-steps">
+                <li><a href="#/analysis/calibration"><b>Calibration</b><span>Is the score equally accurate on health and on cost, for both groups?</span></a></li>
+                <li><a href="#/analysis/mechanism"><b>Mechanism</b><span>At equal illness, is less spent on Black patients?</span></a></li>
+                <li><a href="#/analysis/biomarkers"><b>Biomarkers</b><span>Do lab values confirm the gap at equal scores?</span></a></li>
+                <li><a href="#/analysis/explorer"><b>Selection</b><span>Who is selected versus who is truly high-need, at any threshold?</span></a></li>
+                <li><a href="#/analysis/swap"><b>Counterfactual</b><span>Re-run the authors' swap exercise, with and without the 2022 fix.</span></a></li>
+                <li><a href="#/analysis/human"><b>Human review</b><span>Did clinicians correct the score when they enrolled patients?</span></a></li>
+                <li><a href="#/results/labels"><b>Label choice</b><span>Same model, three labels: does the target drive the bias? <em>(§08)</em></span></a></li>
+              </ol>
             </div>
-            <div class="fig-body"><div class="chart"></div></div>
-            <div class="fig-foot">
-              <details>
-                <summary>How this was computed</summary>
-                <p>
-                  OLS of <code>cost_t</code> on a Black indicator with fixed effects for condition count (capped at
-                  10): <span class="num" data-num="mechanism.gap_cost.est" data-fmt="usdsigned"></span> per patient-year
-                  (95% CI <span class="num" data-num="mechanism.gap_cost.lo" data-fmt="usdsigned"></span> to
-                  <span class="num" data-num="mechanism.gap_cost.hi" data-fmt="usdsigned"></span>). Published on the real
-                  data: −$1,801. Avoidable (emergency + inpatient) cost gap:
-                  <span class="num" data-num="mechanism.gap_avoidable.est" data-fmt="usdsigned"></span>, an interval
-                  that includes zero, which is why an avoidable-cost label is less biased.
-                </p>
-              </details>
-            </div>
-          </figure>
+            <template class="notes">
+              <h4>Data</h4>
+              <p>The original patient data cannot be shared, so the authors released a synthetic cohort generated with the <em>synthpop</em> package. It reproduces the structure of the original, not its exact magnitudes, so we always show published values alongside ours. The raw CSV is downloaded on demand and never redistributed.</p>
+              <h4>Estimation</h4>
+              <p>Percentiles are ranks of the commercial score (0–99). Racial gaps are OLS coefficients with percentile fixed effects. Intervals are 95% percentile bootstraps from 1,000 row resamples, seed 0. Label models are LASSO with standardised features and a 10-fold cross-validated penalty, trained on a deterministic 60/40 split with race excluded and an assertion against leakage of year-t variables.</p>
+            </template>
+          </article>
 
-          <figure class="fig" id="fig-biomarkers">
-            <div class="fig-head">
-              <div>
-                <span class="fig-no">Fig. 5.3 · Biomarkers</span>
-                <h4 class="fig-title">The clinical record agrees: at equal scores, Black patients' diabetes, blood pressure, kidney function and anaemia are worse</h4>
-                <p class="fig-sub">Mean biomarker value by risk-score decile with 95% intervals. <span class="sw b"></span>Black <span class="sw w" style="margin-left:.6rem"></span>White.</p>
+          <article class="step" data-step="calibration" data-label="Calibration">
+            <div class="fig" id="fig-calibration">
+              <div class="fig-head">
+                <div><h3 class="fig-title"></h3><p class="fig-sub"></p></div>
+                <div data-control></div>
+              </div>
+              <div class="fig-main with-callouts">
+                <div class="fig-body"><div class="chart" data-fill></div></div>
+                <aside class="callouts">
+                  <div class="callout"><div class="co-v is-black" data-num="calibration.gap_health.est" data-fmt="signed2"></div><div class="co-l">chronic conditions, Black vs White, at the same percentile <span class="num">(CI <span data-num="calibration.gap_health.lo" data-fmt="num2"></span>–<span data-num="calibration.gap_health.hi" data-fmt="num2"></span>)</span></div></div>
+                  <div class="callout"><div class="co-v" data-num="calibration.gap_cost.est" data-fmt="usdsigned"></div><div class="co-l">cost gap at the same percentile: CI <span class="num" data-num="calibration.gap_cost.lo" data-fmt="usdsigned"></span> to <span class="num" data-num="calibration.gap_cost.hi" data-fmt="usdsigned"></span>, includes zero</div></div>
+                  <div class="callout"><div class="co-v"><span data-num="calibration.top3.conditions_black" data-fmt="num1"></span> vs <span data-num="calibration.top3.conditions_white" data-fmt="num1"></span></div><div class="co-l">conditions in the auto-identified group, Black vs White (published 4.8 vs 3.8)</div></div>
+                </aside>
               </div>
             </div>
-            <div class="fig-body"><div id="biomarkers"></div></div>
-            <div class="fig-foot">
-              Biomarkers are missing for many patients because tests were not ordered. HbA1c is missing for
-              <span class="num" data-num="biomarkers.markers.0.missing.b" data-fmt="pct0"></span> of Black and
-              <span class="num" data-num="biomarkers.markers.0.missing.w" data-fmt="pct0"></span> of White
-              patient-years, so these comparisons describe the tested population only.
-            </div>
-          </figure>
+            <template class="notes">
+              <h4>Reading the chart</h4>
+              <p>Dots are percentile means; lines are count-weighted kernel smooths. On cost the lines overlap: the score is well calibrated across races, which is exactly the check a vendor would run. On health the Black line sits above the White line at every percentile.</p>
+              <p>Within-percentile gaps come from <code>y ~ black + C(percentile)</code>: health <span class="num" data-num="calibration.gap_health.est" data-fmt="signed2"></span> conditions, cost <span class="num" data-num="calibration.gap_cost.est" data-fmt="usdsigned"></span>.</p>
+            </template>
+          </article>
 
-          <figure class="fig" id="fig-explorer">
-            <div class="fig-head">
-              <div>
-                <span class="fig-no">Fig. 5.4 · Threshold explorer</span>
-                <h4 class="fig-title">Wherever the hospital draws the line, a cost label selects fewer Black patients than need would</h4>
-                <p class="fig-sub">Black share of the selected group as the programme threshold moves, for the commercial score and for three models trained on different labels (hold-out set, n = <span data-num="labels.n_holdout" data-fmt="int"></span>). The red dashed line is the Black share among the truly high-need.</p>
+          <article class="step" data-step="mechanism" data-label="Mechanism">
+            <div class="fig" id="fig-mechanism">
+              <div class="fig-head">
+                <div><h3 class="fig-title">At the same level of illness, less is spent on most Black patients</h3>
+                <p class="fig-sub">Mean total cost by number of active chronic conditions. Spending is the label, so this gap becomes the bias.</p></div>
               </div>
-              <div data-control></div>
-            </div>
-            <label class="slider">
-              <span>Threshold</span>
-              <input type="range" min="50" max="99" step="1" value="97" aria-label="Programme threshold percentile" />
-              <output>97th</output>
-            </label>
-            <div class="split">
-              <div class="fig-body"><div class="chart"></div></div>
-              <div class="readout" aria-live="polite"></div>
-            </div>
-            <div class="fig-foot">
-              <details>
-                <summary>Defining "truly high-need"</summary>
-                <p>
-                  For a programme of capacity k, the truly high-need group is the k patients with the most realised
-                  chronic conditions in year t. Ties at the cut-off share the remaining places fractionally, so the group
-                  always has exactly k members. Chronic-condition counts depend on diagnoses being recorded, which
-                  itself requires access to care, so these estimates are likely <em>lower bounds</em> on the bias. The
-                  report includes sensitivity checks using absolute definitions (≥ 3 conditions; HbA1c ≥ 9 or systolic
-                  BP ≥ 140).
-                </p>
-              </details>
-            </div>
-          </figure>
-
-          <figure class="fig" id="fig-swap">
-            <div class="fig-head">
-              <div>
-                <span class="fig-no">Fig. 5.5 · Counterfactual swap</span>
-                <h4 class="fig-title">Correcting a one-line bug made the original finding stronger</h4>
-                <p class="fig-sub">Starting from the patients above each threshold, the healthiest White patient is replaced by the next-ranked Black patient below the line whenever that Black patient is sicker, until no swap helps.</p>
+              <div class="fig-main with-callouts">
+                <div class="fig-body"><div class="chart" data-fill></div></div>
+                <aside class="callouts">
+                  <div class="callout"><div class="co-v" data-num="mechanism.gap_cost.est" data-fmt="usdneg"></div><div class="co-l">per year for a Black patient at equal illness <span class="num">(CI <span data-num="mechanism.gap_cost.lo" data-fmt="usdneg"></span> to <span data-num="mechanism.gap_cost.hi" data-fmt="usdneg"></span>; published −$1,801)</span></div></div>
+                  <div class="callout"><div class="co-v" data-num="mechanism.black_share_le5" data-fmt="pct0"></div><div class="co-l">of Black patient-years have five or fewer conditions, where Black spending is lower at every level</div></div>
+                  <div class="callout"><div class="co-v" data-num="mechanism.gap_avoidable.est" data-fmt="usdneg"></div><div class="co-l">gap in <em>avoidable</em> (emergency + inpatient) cost: smaller, and its CI includes zero</div></div>
+                </aside>
               </div>
             </div>
-            <div class="fig-body"><div class="chart"></div></div>
-            <div class="fig-foot">
-              <details>
-                <summary>Replication check &amp; caveat</summary>
-                <p>
-                  Run against the original code's logic, our implementation returns
-                  <span class="num" data-num="swap.at97.before" data-fmt="pct1"></span> →
-                  <span class="num" data-num="swap.at97.buggy" data-fmt="pct1"></span> at the 97th percentile, matching
-                  the authors' published synthetic output to four decimals. With the 2022 fix it returns
-                  <span class="num" data-num="swap.at97.fixed" data-fmt="pct1"></span>, matching their corrected figure
-                  of 59%. This exercise uses the authors' percentile binning (top
-                  <span class="num">4%</span>, n = <span data-num="swap.at97.n" data-fmt="int"></span>). The swap is
-                  one-directional: it only removes White patients and only adds Black ones. If we fill the same places
-                  purely by realised chronic conditions, the Black share is
-                  <span class="num" data-num="swap.at97.oracle" data-fmt="pct1"></span>. So the 59% figure shows
-                  that many Black patients below the line are sicker than White patients above it; it is not the
-                  composition of an unbiased programme.
-                </p>
-              </details>
+            <template class="notes">
+              <h4>Method</h4>
+              <p>OLS of total cost on a Black indicator with fixed effects for the number of active chronic conditions (capped at 10). Above five conditions the groups are small, under 160 Black patient-years per level, and the pattern is noisy.</p>
+              <p>The smaller avoidable-cost gap anticipates why an avoidable-cost label is less biased (§08).</p>
+            </template>
+          </article>
+
+          <article class="step" data-step="biomarkers" data-label="Biomarkers">
+            <div class="fig" id="fig-biomarkers">
+              <div class="fig-head">
+                <div><h3 class="fig-title">The clinical record agrees: at equal scores, Black patients are sicker</h3>
+                <p class="fig-sub">Mean biomarker by risk-score decile with 95% intervals. <i class="sw b"></i>Black <i class="sw w"></i>White</p></div>
+              </div>
+              <div class="fig-main"><div class="multiples" id="biomarkers"></div></div>
             </div>
-          </figure>
+            <template class="notes">
+              <h4>Missing tests</h4>
+              <p>Biomarkers are missing where tests were not ordered. HbA1c is missing for <span class="num" data-num="biomarkers.markers.0.missing.b" data-fmt="pct0"></span> of Black and <span class="num" data-num="biomarkers.markers.0.missing.w" data-fmt="pct0"></span> of White patient-years, so these panels describe the tested population only.</p>
+            </template>
+          </article>
 
-          <h3>Did human review correct the score?</h3>
-          <div class="prose">
-            <p>
-              Enrolment was ultimately a human decision: <span class="num" data-num="human.n_enrolled" data-fmt="int"></span>
-              patient-years were enrolled, <span class="num" data-num="human.share_enrolled_above_55" data-fmt="pct0"></span>
-              of them from the flagged pool. At the same score percentile, Black patients were enrolled at a rate only
-              <span class="num" data-num="human.enrol_gap_same_score.est" data-fmt="pp"></span> higher
-              (95% CI <span class="num" data-num="human.enrol_gap_same_score.lo" data-fmt="pp"></span> to
-              <span class="num" data-num="human.enrol_gap_same_score.hi" data-fmt="pp"></span>). The enrolled Black
-              patients still had <span class="num" data-num="human.conditions_gap.est" data-fmt="num2"></span> more
-              chronic conditions on average than enrolled White patients
-              (<span class="num" data-num="human.conditions_enrolled.b" data-fmt="num2"></span> vs
-              <span class="num" data-num="human.conditions_enrolled.w" data-fmt="num2"></span>). A
-              <em>human in the loop</em> was present but did not act as a safeguard: the higher bar for Black
-              patients survived review.
-            </p>
-          </div>
-        </section>
+          <article class="step" data-step="explorer" data-label="Threshold explorer">
+            <div class="fig" id="fig-explorer">
+              <div class="fig-head">
+                <div><h3 class="fig-title">Wherever the line is drawn, a cost label selects fewer Black patients than need would</h3>
+                <p class="fig-sub">Black share of patients selected at each threshold, hold-out set (n = <span data-num="labels.n_holdout" data-fmt="int"></span>). Red dashed line: Black share of the truly high-need.</p></div>
+                <div data-control></div>
+              </div>
+              <label class="slider">
+                <span>Threshold</span>
+                <input type="range" min="50" max="99" step="1" value="97" aria-label="Programme threshold percentile" />
+                <output>97th</output>
+              </label>
+              <div class="fig-main with-readout">
+                <div class="fig-body"><div class="chart" data-fill></div></div>
+                <div class="readout" aria-live="polite"></div>
+              </div>
+            </div>
+            <template class="notes">
+              <h4>"Truly high-need"</h4>
+              <p>For a programme of capacity k, the truly high-need group is the k patients with the most realised chronic conditions. Ties at the cut-off share the remaining places fractionally. Condition counts depend on access to diagnosis, so these estimates are lower bounds. The report adds sensitivity checks using ≥ 3 conditions and uncontrolled HbA1c or blood pressure.</p>
+              <p>The robust signature is precision: selected Black patients are more often high-need than selected White patients, which means the bar for Black patients is higher.</p>
+            </template>
+          </article>
 
-        <!-- §06 ------------------------------------------------------------ -->
-        <section class="sec" id="principles">
-          <header class="sec-head">
-            <div class="sec-no">§06</div>
-            <div class="sec-kicker">Relevant ethical principles</div>
-            <h2>Seven frameworks, one verdict: justice and accountability failed first</h2>
-          </header>
-          <div class="prose">
-            <p>
-              We map the issues onto classical principlism<a class="cite" data-ref="beauchamp2019"></a> and the
-              AI-specific frameworks a hospital in each jurisdiction would cite. The frameworks disagree on vocabulary
-              but not on substance. Every one of them names fairness, accountability and validity, and the Impact Pro
-              case breaches all three. Hover a row or column to trace a principle across frameworks.
-            </p>
-          </div>
+          <article class="step" data-step="swap" data-label="Counterfactual">
+            <div class="fig" id="fig-swap">
+              <div class="fig-head">
+                <div><h3 class="fig-title">Correcting a one-line bug made the original finding stronger</h3>
+                <p class="fig-sub">Swap the healthiest auto-identified White patient for the next sicker Black patient below the line, until no swap helps.</p></div>
+              </div>
+              <div class="fig-main with-callouts">
+                <div class="fig-body"><div class="chart" data-fill></div></div>
+                <aside class="callouts">
+                  <div class="callout"><div class="co-v"><span data-num="swap.at97.before" data-fmt="pct1"></span> → <span data-num="swap.at97.buggy" data-fmt="pct1"></span></div><div class="co-l">original code, matches the authors' published synthetic output exactly</div></div>
+                  <div class="callout"><div class="co-v is-black">→ <span data-num="swap.at97.fixed" data-fmt="pct1"></span></div><div class="co-l">corrected code, matches the authors' 2022 erratum (59%)</div></div>
+                  <div class="callout"><div class="co-v" data-num="swap.at97.oracle" data-fmt="pct1"></div><div class="co-l">Black share if the same places were filled purely by need: the swap is one-directional</div></div>
+                </aside>
+              </div>
+            </div>
+            <template class="notes">
+              <h4>Replication check and caveat</h4>
+              <p>The exercise uses the authors' percentile binning (top 4%, n = <span data-num="swap.at97.n" data-fmt="int"></span>). The swap only removes White patients and only adds Black ones. So 59% shows how many Black patients below the line are sicker than White patients above it. It is not the composition of an unbiased programme.</p>
+            </template>
+          </article>
+
+          <article class="step" data-step="human" data-label="Human review">
+            <div class="step-head"><h3>A human in the loop was present, but did not act as a safeguard</h3>
+            <p class="fig-sub">Enrolment was ultimately a clinician decision (<span data-num="human.n_enrolled" data-fmt="int"></span> patient-years). If review corrected the score, enrolled Black and White patients would be equally sick.</p></div>
+            <div class="human" id="human"></div>
+            <template class="notes">
+              <h4>Method</h4>
+              <p>Among patients flagged at or above the 55th percentile, the within-percentile difference in enrolment probability (Black minus White) is <span class="num" data-num="human.enrol_gap_same_score.est" data-fmt="pp"></span>, with CI <span class="num" data-num="human.enrol_gap_same_score.lo" data-fmt="pp"></span> to <span class="num" data-num="human.enrol_gap_same_score.hi" data-fmt="pp"></span>. The condition gap among enrolled patients is bootstrapped over enrolled patient-years.</p>
+            </template>
+          </article>
+        </div>
+      </section>
+
+      <!-- §06 PRINCIPLES ==================================================== -->
+      <section class="screen" data-screen="principles" data-label="Principles" data-no="06">
+        <header class="screen-head">
+          <p class="kicker"><span>§06</span>Relevant ethical principles</p>
+          <h2>Seven frameworks, one verdict: justice, validity and accountability failed</h2>
+        </header>
+        <div class="screen-body principles">
           <div class="table-wrap"><table class="t xwalk" id="xwalk"></table></div>
-        </section>
+          <p class="insight">The frameworks disagree on vocabulary but not on substance. Every one names <strong>fairness</strong>, <strong>accountability</strong> and <strong>validity</strong>, and this case breaches all three. Hover a cell to trace a principle across frameworks.</p>
+        </div>
+      </section>
 
-        <!-- §07 ------------------------------------------------------------ -->
-        <section class="sec" id="recommendations">
-          <header class="sec-head">
-            <div class="sec-no">§07</div>
-            <div class="sec-kicker">Proposed solution &amp; recommendations</div>
-            <h2>A pre-deployment impact assessment with a gate the score would have failed</h2>
-          </header>
-          <div class="prose">
-            <p>
-              We propose a seven-gate <strong>Algorithmic Impact Assessment (AIA)</strong> for population-health risk
-              tools. It combines the impact levels of Canada's Directive on Automated Decision-Making
-              <a class="cite" data-ref="canada_dadm"></a>, the participatory stages of the Ada Lovelace Institute's NHS
-              pilot<a class="cite" data-ref="ada2022"></a>, the four-step Algorithmic Bias Playbook
-              <a class="cite" data-ref="booth2021"></a> and NIST's Govern–Map–Measure–Manage cycle
-              <a class="cite" data-ref="nist2023"></a>. The decisive addition is <strong>G1, label validity</strong>,
-              a test that checks whether the training target measures need equally across groups. It takes an
-              afternoon with data the hospital already holds.
-            </p>
-            <aside class="sidenote">
-              <b>Impact level</b>Under Canada's four-level scale, a tool that rations access to care for large numbers
-              of patients, with effects that are hard to reverse, scores Level III–IV. That level triggers peer review,
-              published assessments and human decision-making.
-            </aside>
-          </div>
-          <ol class="gates" id="gates"></ol>
+      <!-- §07 RECOMMENDATIONS =============================================== -->
+      <section class="screen has-steps" data-screen="recommendations" data-label="Recommendations" data-no="07">
+        <header class="screen-head compact">
+          <p class="kicker"><span>§07</span>Proposed solution &amp; recommendations</p>
+          <nav class="steps" aria-label="Recommendation steps"></nav>
+        </header>
+        <div class="screen-body stage">
+          <article class="step" data-step="aia" data-label="Impact assessment">
+            <div class="step-head"><h3>A seven-gate impact assessment, with one gate the score would have failed</h3>
+            <p class="fig-sub">Built from Canada's impact levels, the Ada Lovelace NHS pilot, the Algorithmic Bias Playbook and NIST's AI RMF. Select a gate.</p></div>
+            <div class="gateflow" id="gates"></div>
+            <template class="notes">
+              <h4>Impact level</h4>
+              <p>Under Canada's four-level scale, a tool that rations access to care for large numbers of patients, with effects that are hard to reverse, is Level III–IV. That level triggers peer review, a published assessment and human decision-making.</p>
+              <p>The pass thresholds for G1 and G2 are our proposals and should be justified locally. G1 needs only data a hospital already holds.</p>
+            </template>
+          </article>
+          <article class="step" data-step="raci" data-label="Accountability">
+            <div class="step-head"><h3>Accountability follows use: one accountable party per activity</h3>
+            <p class="fig-sub">R responsible · A accountable · C consulted · I informed. Select a column to see that role's duties.</p></div>
+            <div class="raci-wrap">
+              <div class="table-wrap"><table class="raci" id="raci"></table></div>
+              <div class="role-note" id="role-note" aria-live="polite"></div>
+            </div>
+          </article>
+          <article class="step" data-step="actions" data-label="Actions by actor">
+            <div class="step-head"><h3>What each actor should do now</h3></div>
+            <div class="actors" id="actors"></div>
+          </article>
+        </div>
+      </section>
 
-          <h3>Who answers for what: accountability matrix</h3>
-          <div class="prose">
-            <p>
-              Accountability follows <em>use</em>. The vendor designs the label and must disclose it with subgroup
-              performance, but the hospital chooses to deploy, sets the threshold and owns the outcome. Each activity
-              has exactly one accountable party (<strong>A</strong>). Click a column to see that role's duties.
-            </p>
-          </div>
-          <div class="table-wrap"><table class="raci" id="raci"></table></div>
-          <div class="role-note" id="role-note" aria-live="polite"></div>
-
-          <h3>Actions by actor</h3>
-          <div class="actors" id="actors"></div>
-        </section>
-
-        <!-- §08 ------------------------------------------------------------ -->
-        <section class="sec" id="results">
-          <header class="sec-head">
-            <div class="sec-no">§08</div>
-            <div class="sec-kicker">Results &amp; findings</div>
-            <h2>The remedy is cheap; the obligation to apply it is mostly missing</h2>
-          </header>
-
-          <figure class="fig" id="fig-frontier">
-            <div class="fig-head">
-              <div>
-                <span class="fig-no">Fig. 8.1 · Label mixer</span>
-                <h4 class="fig-title">Blending the label recovers most of the fairness gap at almost no cost to the programme's financial target</h4>
-                <p class="fig-sub">Each point is a score built as α × predicted cost + (1 − α) × predicted chronic conditions (both standardised). Drag α, or click a point.</p>
+      <!-- §08 RESULTS ======================================================= -->
+      <section class="screen has-steps" data-screen="results" data-label="Results" data-no="08">
+        <header class="screen-head compact">
+          <p class="kicker"><span>§08</span>Results &amp; findings</p>
+          <nav class="steps" aria-label="Result steps"></nav>
+        </header>
+        <div class="screen-body stage">
+          <article class="step" data-step="replication" data-label="Replication">
+            <div class="step-head"><h3>Every effect replicates in direction and approximate size</h3>
+            <p class="fig-sub">Published values (real cohort, 100,009 patient-years) against ours (synthetic replica). The swap and label-choice results match the authors' own synthetic outputs.</p></div>
+            <div class="table-wrap"><table class="t big" id="fidelity"></table></div>
+          </article>
+          <article class="step" data-step="labels" data-label="Label choice">
+            <div class="step-head"><h3>Same model, same features, different label: the label decides who is selected</h3>
+            <p class="fig-sub">Black share of the top 3% under each ranking, hold-out set, with 95% bootstrap intervals. Diamonds mark the published values.</p></div>
+            <div class="labelbars" id="labelbars"></div>
+          </article>
+          <article class="step" data-step="mixer" data-label="Label mixer">
+            <div class="fig" id="fig-frontier">
+              <div class="fig-head">
+                <div><h3 class="fig-title">Blending the label closes much of the gap at no loss in cost captured</h3>
+                <p class="fig-sub">Each point is α × predicted cost + (1 − α) × predicted chronic conditions. Drag α or click a point.</p></div>
+                <div data-control></div>
               </div>
-              <div data-control></div>
+              <label class="slider">
+                <span>Weight on cost</span>
+                <input type="range" min="0" max="20" step="1" value="12" aria-label="Blend weight alpha" />
+                <output>α = 0.60</output>
+              </label>
+              <div class="fig-main with-readout">
+                <div class="fig-body"><div class="chart" data-fill></div></div>
+                <div class="readout" aria-live="polite"></div>
+              </div>
             </div>
-            <label class="slider">
-              <span>Weight on cost</span>
-              <input type="range" min="0" max="20" step="1" value="12" aria-label="Blend weight alpha" />
-              <output>α = 0.60</output>
-            </label>
-            <div class="split">
-              <div class="fig-body"><div class="chart"></div></div>
-              <div class="readout" aria-live="polite"></div>
+            <template class="notes">
+              <h4>Check</h4>
+              <p>Blending predictions approximates training on a blended label. Retraining directly on the α = 0.5 label gives a ranking with Spearman ρ = <span class="num" data-num="labels.blend_check_spearman" data-fmt="num2"></span> against the blended predictions. The vendor's own re-test on 3.7 million patients cut the excess-conditions gap by 84% with a combined label.</p>
+            </template>
+          </article>
+          <article class="step" data-step="scorecard" data-label="AIA scorecard">
+            <div class="step-head"><h3>Against our assessment, the deployment failed the decisive gate and skipped four others</h3></div>
+            <div class="scorecard" id="scorecard"></div>
+          </article>
+          <article class="step" data-step="law" data-label="Regulatory matrix">
+            <div class="step-head row">
+              <div><h3>Would the law have caught it?</h3>
+              <p class="fig-sub">Eight obligations a hospital deploying this score could face. Select a cell for the provision and source.</p></div>
+              <div data-control id="reg-year"></div>
             </div>
-            <div class="fig-foot">
-              <details>
-                <summary>Check</summary>
-                <p>
-                  Blending predictions approximates training on a blended label. Retraining LASSO directly on the
-                  α = 0.5 label gives a ranking with Spearman ρ =
-                  <span class="num" data-num="labels.blend_check_spearman" data-fmt="num2"></span> against the blended
-                  predictions. The vendor's own replication on 3.7 million patients reduced the excess-conditions gap
-                  by 84% with a combined health-and-cost label<a class="cite" data-ref="obermeyer2019"></a>.
-                </p>
-              </details>
+            <div class="regwrap">
+              <div>
+                <div class="marks-key">
+                  <span><i class="mark y"></i>Binding &amp; applies</span>
+                  <span><i class="mark p"></i>Narrow, not triggered or not yet applicable</span>
+                  <span><i class="mark n"></i>No binding duty</span>
+                  <span><i class="mark x"></i>Weakened since 2019</span>
+                </div>
+                <div class="reg" id="reg"></div>
+              </div>
+              <div class="reg-detail" id="reg-detail" aria-live="polite"></div>
             </div>
-          </figure>
-
-          <div class="table-wrap">
-            <table class="t" id="label-table"></table>
-          </div>
-
-          <h3>Retrospective scorecard: the deployment against our AIA</h3>
-          <div class="scorecard" id="scorecard"></div>
-
-          <h3>Regulatory review: would the law have caught it?</h3>
-          <div class="prose">
-            <p>
-              We code eight obligations a hospital deploying this score could face, for each jurisdiction, at two
-              dates: <strong>October 2019</strong>, when the study was published, and <strong>October 2026</strong>.
-              A full mark means a binding duty that applies to <em>this</em> deployment on that date. Click any cell
-              for the provision and source.
-            </p>
-          </div>
-          <div class="fig-head" style="border-top:0;padding-top:0">
-            <div class="marks-key">
-              <span><i class="mark y"></i>Binding &amp; applies</span>
-              <span><i class="mark p"></i>Partial: binding but narrow, not triggered, or not yet applicable</span>
-              <span><i class="mark n"></i>No duty</span>
-              <span><i class="mark x"></i>Weakened since 2019</span>
-            </div>
-            <div data-control id="reg-year"></div>
-          </div>
-          <div class="table-wrap"><div class="reg" id="reg"></div></div>
-          <div class="reg-detail" id="reg-detail" aria-live="polite"></div>
-          <div class="verdicts" id="verdicts"></div>
-
-          <div class="boxout">
-            <h4>The Indian version of the risk</h4>
-            <div id="india-box"></div>
-          </div>
-
-          <h3>Fidelity: our replication against the published study</h3>
-          <div class="table-wrap"><table class="t" id="fidelity"></table></div>
-
-          <h3>Key findings</h3>
-          <ol class="findings" id="findings"></ol>
-        </section>
-
-        <!-- §09 ------------------------------------------------------------ -->
-        <section class="sec" id="conclusion">
-          <header class="sec-head">
-            <div class="sec-no">§09</div>
-            <div class="sec-kicker">Conclusion</div>
-            <h2>Detection was never the hard part</h2>
-          </header>
-          <div class="qa" id="qa"></div>
-          <div class="prose" style="margin-top:2rem">
-            <h3 style="margin-top:0">Limitations</h3>
-            <p>
-              The cohort is synthetic: it preserves the structure of the original data but not its exact magnitudes,
-              and it has no patient identifiers, so intervals treat patient-years as independent. Chronic-condition
-              counts are themselves shaped by access to care. "White" in the source data means all non-Black patients.
-              The regulatory coding is our legal reading as of 7 October 2026, not legal advice, and several of the
-              instruments cited were still changing when we checked them.
-            </p>
-          </div>
-
-          <h3>References</h3>
-          <ol class="refs" id="refs"></ol>
-        </section>
-      </main>
-    </div>
-
-    <footer class="colophon">
-      <div class="colophon-inner">
-        <div>
-          <h4>Team · Batch B2</h4>
-          <table class="team-table">
-            <tbody>
-              <tr><td>Aditya Ravi</td><td>16014223004</td></tr>
-              <tr><td>Aayush Tiwari</td><td>16014223003</td></tr>
-              <tr><td>Atharva Indulkar</td><td>16014223022</td></tr>
-            </tbody>
-          </table>
+          </article>
+          <article class="step" data-step="verdicts" data-label="Verdicts">
+            <div class="step-head"><h3>As of October 2026, no jurisdiction clearly requires the missing test</h3></div>
+            <div class="verdicts" id="verdicts"></div>
+            <div class="boxout"><h4>The Indian version of the risk</h4><div id="india-box"></div></div>
+          </article>
+          <article class="step" data-step="findings" data-label="Key findings">
+            <div class="step-head"><h3>Six findings</h3></div>
+            <ol class="findings" id="findings"></ol>
+          </article>
         </div>
-        <div>
-          <h4>Data &amp; code</h4>
-          <p>
-            Synthetic cohort from Obermeyer, Powers, Vogeli &amp; Mullainathan (2019), released at
-            gitlab.com/labsysmed/dissecting-bias. Analysis, site and IEEE report:
-            <a href="https://github.com/aditya-ravi11/EAIDS">github.com/aditya-ravi11/EAIDS</a>.
-          </p>
+      </section>
+
+      <!-- §09 CONCLUSION ==================================================== -->
+      <section class="screen has-steps" data-screen="conclusion" data-label="Conclusion" data-no="09">
+        <header class="screen-head compact">
+          <p class="kicker"><span>§09</span>Conclusion</p>
+          <nav class="steps" aria-label="Conclusion steps"></nav>
+        </header>
+        <div class="screen-body stage">
+          <article class="step" data-step="answers" data-label="Answers">
+            <div class="step-head"><h3>Detection was never the hard part. The obligation to look was.</h3></div>
+            <div class="qa" id="qa"></div>
+          </article>
+          <article class="step" data-step="limits" data-label="Limitations & sources">
+            <div class="limits">
+              <div>
+                <h3>Limitations</h3>
+                <ul>
+                  <li>The cohort is <strong>synthetic</strong>: it preserves structure, not exact magnitudes. It has no patient IDs, so intervals treat patient-years as independent.</li>
+                  <li>Chronic-condition counts are themselves shaped by access to care, so bias estimates are <strong>lower bounds</strong>.</li>
+                  <li>"White" in the source data means all non-Black patients. Race is treated as a social category acting through access, not biology.</li>
+                  <li>The legal coding is our reading of primary sources <strong>as of 7 October 2026</strong>, not legal advice. HTI-5, the Colorado litigation and the GDPR omnibus were still in motion.</li>
+                </ul>
+              </div>
+              <div class="refs-panel">
+                <h3>References</h3>
+                <ol class="refs" id="refs"></ol>
+              </div>
+            </div>
+          </article>
+          <article class="step" data-step="end" data-label="Thank you">
+            <div class="endslide">
+              <div>
+                <p class="kicker">EAIDS mini-project · Group 2 · Batch B2</p>
+                <h3 class="end-title">Thank you</h3>
+                <ul class="team">
+                  <li><strong>Aditya Ravi</strong><span>16014223004</span></li>
+                  <li><strong>Aayush Tiwari</strong><span>16014223003</span></li>
+                  <li><strong>Atharva Indulkar</strong><span>16014223022</span></li>
+                </ul>
+                <dl class="links">
+                  <dt>Dashboard</dt><dd><a href="https://aditya-ravi11.github.io/EAIDS/">aditya-ravi11.github.io/EAIDS</a></dd>
+                  <dt>Code</dt><dd><a href="https://github.com/aditya-ravi11/EAIDS">github.com/aditya-ravi11/EAIDS</a></dd>
+                  <dt>Report</dt><dd><a href="https://github.com/aditya-ravi11/EAIDS/blob/main/report/MiniProject_EAIDS_Group2.pdf">MiniProject_EAIDS_Group2.pdf</a></dd>
+                </dl>
+              </div>
+              <figure class="qr"><div id="qr"></div><figcaption>Scan to open the dashboard</figcaption></figure>
+            </div>
+          </article>
         </div>
-        <div>
-          <h4>Notes</h4>
-          <p>
-            Race is analysed as a social category whose effects here run through access to care, not biology.
-            Synthetic results are not real-world magnitudes. Law as of 7 October 2026; not legal advice.
-          </p>
-        </div>
+      </section>
+    </main>
+
+    <footer class="pager">
+      <button class="pg-btn" id="prev" type="button" aria-label="Previous">←</button>
+      <div class="pg-mid">
+        <div class="pg-label" id="pg-label"></div>
+        <div class="pg-bar"><i id="pg-fill"></i></div>
       </div>
+      <button class="pg-btn" id="next" type="button" aria-label="Next">→</button>
     </footer>
+
+    <aside class="drawer" id="drawer" aria-hidden="true">
+      <div class="drawer-head"><b id="drawer-title">Details</b><button type="button" id="drawer-close" aria-label="Close details">×</button></div>
+      <div class="drawer-body" id="drawer-body"></div>
+    </aside>
   </body>
 </html>

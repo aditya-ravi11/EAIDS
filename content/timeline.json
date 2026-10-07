@@ -1,25 +1,311 @@
 {
+  "lanes": [
+    {
+      "key": "research",
+      "label": "Research"
+    },
+    {
+      "key": "us",
+      "label": "United States"
+    },
+    {
+      "key": "eu",
+      "label": "European Union"
+    },
+    {
+      "key": "in",
+      "label": "India"
+    }
+  ],
   "items": [
-    { "date": "25 Oct 2019", "kind": "event", "juris": "US", "title": "Bias published in Science", "text": "Obermeyer et al. show a widely used care-management score under-refers Black patients.", "refs": ["obermeyer2019"] },
-    { "date": "25 Oct 2019", "kind": "event", "juris": "US · NY", "title": "New York regulators write to UnitedHealth", "text": "DFS and DOH ask the company to show Impact Pro is not discriminatory or stop using it.", "refs": ["dfs2019"] },
-    { "date": "3 Dec 2019", "kind": "event", "juris": "US", "title": "Senators Booker and Wyden demand answers", "text": "Letters to CMS, the FTC and five insurers ask what safeguards exist.", "refs": ["booker2019"] },
-    { "date": "Feb 2021", "kind": "guidance", "juris": "IN", "title": "NITI Aayog Responsible AI", "text": "Seven voluntary principles, including equality and accountability.", "refs": ["niti2021"] },
-    { "date": "Jun 2021", "kind": "guidance", "juris": "US", "title": "Algorithmic Bias Playbook", "text": "Inventory, screen, retrain or suspend, prevent.", "refs": ["booth2021"] },
-    { "date": "Feb 2022", "kind": "guidance", "juris": "UK", "title": "First healthcare AIA", "text": "Ada Lovelace Institute's NHS pilot puts patients in the assessment loop.", "refs": ["ada2022"] },
-    { "date": "Sep 2022", "kind": "event", "juris": "—", "title": "Swap-code erratum", "text": "Corrected share of Black patients in the counterfactual rises from 47% to 59%.", "refs": ["labsysmed"] },
-    { "date": "Jan–Mar 2023", "kind": "guidance", "juris": "US · IN", "title": "NIST AI RMF and ICMR guidelines", "text": "Voluntary risk-management and health-AI ethics frameworks.", "refs": ["nist2023", "icmr2023"] },
-    { "date": "Aug 2023", "kind": "law", "juris": "IN", "title": "DPDP Act enacted", "text": "India's first data-protection statute; duties await rules.", "refs": ["dpdp2023"] },
-    { "date": "Dec 2023", "kind": "law", "juris": "EU", "title": "SCHUFA judgment", "text": "A score can itself be an automated decision under GDPR Art 22.", "refs": ["schufa2023"] },
-    { "date": "May 2024", "kind": "law", "juris": "US", "title": "§1557 rule and Colorado AI Act", "text": "45 CFR 92.210 bans discrimination through decision-support tools; Colorado passes the first state AI Act.", "refs": ["hhs1557", "colorado"] },
-    { "date": "Aug 2024", "kind": "law", "juris": "EU", "title": "AI Act enters into force", "text": "Healthcare eligibility by public bodies listed as high-risk (Annex III 5(a)).", "refs": ["euaiact"] },
-    { "date": "Jan 2025", "kind": "law", "juris": "US", "title": "OCR guidance; EO 14110 revoked", "text": "OCR confirms §92.210 duties are input-based; EO 14148 revokes the federal AI safety order.", "refs": ["ocr2025", "eo14148"] },
-    { "date": "Apr 2025", "kind": "law", "juris": "US", "title": "EO 14281", "text": "Agencies told to deprioritise disparate-impact enforcement.", "refs": ["eo14281"] },
-    { "date": "Nov 2025", "kind": "law", "juris": "IN", "title": "DPDP Rules notified; AI guidelines", "text": "Phased commencement over 18 months; MeitY opts for voluntary AI governance.", "refs": ["dpdprules2025", "meity2025"] },
-    { "date": "Dec 2025", "kind": "guidance", "juris": "US", "title": "EO 14365; HTI-5 proposed", "text": "Federal push against state AI laws; ONC proposes dropping algorithm source attributes.", "refs": ["eo14365", "hti5"] },
-    { "date": "May 2026", "kind": "law", "juris": "US · CO", "title": "Colorado SB 26-189", "text": "AI Act repealed and re-enacted without impact assessments.", "refs": ["colorado"] },
-    { "date": "Jul 2026", "kind": "law", "juris": "EU · US · IN", "title": "Omnibus, Title VI rule, CDSCO guidance", "text": "EU delays high-risk duties to Dec 2027; HHS removes disparate-impact provisions; CDSCO issues device-software guidance.", "refs": ["omnibus2026", "hhs_tvi2026", "cdsco2026"] },
-    { "date": "1 Jan 2027", "kind": "future", "juris": "US · CO", "title": "Colorado notice duties", "text": "Scheduled start; enforcement currently stayed.", "refs": ["colorado"] },
-    { "date": "13 May 2027", "kind": "future", "juris": "IN", "title": "DPDP main duties", "text": "Notice, security and Significant Data Fiduciary obligations begin.", "refs": ["dpdprules2025"] },
-    { "date": "2 Dec 2027", "kind": "future", "juris": "EU", "title": "AI Act Annex III duties", "text": "Risk management, bias examination, FRIA and oversight apply.", "refs": ["omnibus2026"] }
+    {
+      "date": "2019-10",
+      "lane": "research",
+      "kind": "event",
+      "short": "Bias published",
+      "title": "Bias published in Science",
+      "text": "Obermeyer et al. show a widely used care-management score under-refers Black patients.",
+      "refs": [
+        "obermeyer2019"
+      ]
+    },
+    {
+      "date": "2021-06",
+      "lane": "research",
+      "kind": "guidance",
+      "short": "Bias Playbook",
+      "title": "Algorithmic Bias Playbook",
+      "text": "Chicago Booth's four steps for organisations: inventory, screen, retrain or suspend, prevent.",
+      "refs": [
+        "booth2021"
+      ]
+    },
+    {
+      "date": "2022-02",
+      "lane": "research",
+      "kind": "guidance",
+      "short": "NHS AIA pilot",
+      "title": "First healthcare AIA",
+      "text": "The Ada Lovelace Institute's NHS pilot puts patients into the assessment loop.",
+      "refs": [
+        "ada2022"
+      ]
+    },
+    {
+      "date": "2022-09",
+      "lane": "research",
+      "kind": "event",
+      "short": "Swap erratum",
+      "title": "Swap-code erratum",
+      "text": "A one-line bug fix raises the corrected counterfactual share of Black patients from 47% to 59%.",
+      "refs": [
+        "labsysmed"
+      ]
+    },
+    {
+      "date": "2019-10",
+      "lane": "us",
+      "kind": "event",
+      "short": "NY regulators' letter",
+      "title": "New York regulators write to UnitedHealth",
+      "text": "DFS and DOH ask the company to show Impact Pro is not discriminatory or stop using it.",
+      "refs": [
+        "dfs2019"
+      ]
+    },
+    {
+      "date": "2019-12",
+      "lane": "us",
+      "kind": "event",
+      "short": "Senators' letters",
+      "title": "Senators Booker and Wyden demand answers",
+      "text": "Letters to CMS, the FTC and five insurers ask what safeguards exist.",
+      "refs": [
+        "booker2019"
+      ]
+    },
+    {
+      "date": "2023-01",
+      "lane": "us",
+      "kind": "guidance",
+      "short": "NIST AI RMF",
+      "title": "NIST AI Risk Management Framework",
+      "text": "Voluntary Govern–Map–Measure–Manage framework; 'fair, with harmful bias managed'.",
+      "refs": [
+        "nist2023"
+      ]
+    },
+    {
+      "date": "2024-01",
+      "lane": "us",
+      "kind": "law",
+      "short": "HTI-1",
+      "title": "ONC HTI-1 rule",
+      "text": "Certified health-IT developers must disclose source attributes of predictive tools they supply.",
+      "refs": [
+        "hti1"
+      ]
+    },
+    {
+      "date": "2024-05",
+      "lane": "us",
+      "kind": "law",
+      "short": "§1557 AI rule",
+      "title": "Section 1557 rule (45 CFR 92.210)",
+      "text": "Bans discrimination through patient-care decision-support tools; identify-and-mitigate duty keyed to tool inputs.",
+      "refs": [
+        "hhs1557"
+      ]
+    },
+    {
+      "date": "2024-05",
+      "lane": "us",
+      "kind": "law",
+      "short": "Colorado AI Act",
+      "title": "Colorado AI Act (SB 24-205)",
+      "text": "First state law with deployer impact assessments. It never takes effect.",
+      "refs": [
+        "colorado"
+      ]
+    },
+    {
+      "date": "2025-01",
+      "lane": "us",
+      "kind": "law",
+      "short": "EO 14110 revoked",
+      "title": "OCR guidance; EO 14110 revoked",
+      "text": "OCR confirms §92.210 duties are input-based; EO 14148 revokes the federal AI order.",
+      "refs": [
+        "ocr2025",
+        "eo14148"
+      ]
+    },
+    {
+      "date": "2025-04",
+      "lane": "us",
+      "kind": "law",
+      "short": "EO 14281",
+      "title": "EO 14281",
+      "text": "Agencies told to deprioritise disparate-impact enforcement.",
+      "refs": [
+        "eo14281"
+      ]
+    },
+    {
+      "date": "2025-12",
+      "lane": "us",
+      "kind": "guidance",
+      "short": "EO 14365 · HTI-5",
+      "title": "EO 14365; HTI-5 proposed",
+      "text": "Federal push against state AI laws; ONC proposes dropping algorithm source attributes.",
+      "refs": [
+        "eo14365",
+        "hti5"
+      ]
+    },
+    {
+      "date": "2026-05",
+      "lane": "us",
+      "kind": "law",
+      "short": "Colorado re-enacted",
+      "title": "Colorado SB 26-189",
+      "text": "AI Act repealed and re-enacted as a notice regime without impact assessments.",
+      "refs": [
+        "colorado"
+      ]
+    },
+    {
+      "date": "2026-07",
+      "lane": "us",
+      "kind": "law",
+      "short": "Effects rule removed",
+      "title": "HHS Title VI rule",
+      "text": "HHS removes the disparate-impact ('effects') provisions from its Title VI regulations.",
+      "refs": [
+        "hhs_tvi2026"
+      ]
+    },
+    {
+      "date": "2027-01",
+      "lane": "us",
+      "kind": "future",
+      "short": "Colorado notices",
+      "title": "Colorado notice duties",
+      "text": "Scheduled start; enforcement currently stayed in xAI v. Weiser.",
+      "refs": [
+        "colorado"
+      ]
+    },
+    {
+      "date": "2023-12",
+      "lane": "eu",
+      "kind": "law",
+      "short": "SCHUFA ruling",
+      "title": "SCHUFA judgment (C-634/21)",
+      "text": "A score can itself be an automated decision under GDPR Art 22.",
+      "refs": [
+        "schufa2023"
+      ]
+    },
+    {
+      "date": "2024-08",
+      "lane": "eu",
+      "kind": "law",
+      "short": "AI Act in force",
+      "title": "AI Act enters into force",
+      "text": "Healthcare eligibility decided by public bodies is listed as high-risk (Annex III 5(a)).",
+      "refs": [
+        "euaiact"
+      ]
+    },
+    {
+      "date": "2026-07",
+      "lane": "eu",
+      "kind": "law",
+      "short": "Digital Omnibus",
+      "title": "Digital Omnibus (Reg. 2026/1744)",
+      "text": "High-risk obligations delayed to Dec 2027; new Art 4a permits bias-detection data.",
+      "refs": [
+        "omnibus2026"
+      ]
+    },
+    {
+      "date": "2027-12",
+      "lane": "eu",
+      "kind": "future",
+      "short": "Annex III duties",
+      "title": "AI Act Annex III duties apply",
+      "text": "Risk management, bias examination, FRIA and human oversight begin.",
+      "refs": [
+        "omnibus2026"
+      ]
+    },
+    {
+      "date": "2021-02",
+      "lane": "in",
+      "kind": "guidance",
+      "short": "NITI Responsible AI",
+      "title": "NITI Aayog Responsible AI",
+      "text": "Seven voluntary principles, including equality and accountability.",
+      "refs": [
+        "niti2021"
+      ]
+    },
+    {
+      "date": "2023-03",
+      "lane": "in",
+      "kind": "guidance",
+      "short": "ICMR guidelines",
+      "title": "ICMR AI guidelines",
+      "text": "Ten principles for AI in healthcare, including validity and non-discrimination; voluntary.",
+      "refs": [
+        "icmr2023"
+      ]
+    },
+    {
+      "date": "2023-08",
+      "lane": "in",
+      "kind": "law",
+      "short": "DPDP Act",
+      "title": "DPDP Act enacted",
+      "text": "India's first data-protection statute; duties wait for rules.",
+      "refs": [
+        "dpdp2023"
+      ]
+    },
+    {
+      "date": "2025-11",
+      "lane": "in",
+      "kind": "law",
+      "short": "DPDP Rules · AI guidelines",
+      "title": "DPDP Rules notified; AI guidelines",
+      "text": "Phased commencement over 18 months; MeitY opts for voluntary AI governance.",
+      "refs": [
+        "dpdprules2025",
+        "meity2025"
+      ]
+    },
+    {
+      "date": "2026-07",
+      "lane": "in",
+      "kind": "guidance",
+      "short": "CDSCO software guidance",
+      "title": "CDSCO medical-device software guidance",
+      "text": "Bias and training-data evidence requested, but only for software that is a medical device.",
+      "refs": [
+        "cdsco2026"
+      ]
+    },
+    {
+      "date": "2027-05",
+      "lane": "in",
+      "kind": "future",
+      "short": "DPDP duties begin",
+      "title": "DPDP main duties",
+      "text": "Notice, security and Significant Data Fiduciary obligations begin.",
+      "refs": [
+        "dpdprules2025"
+      ]
+    }
   ]
 }

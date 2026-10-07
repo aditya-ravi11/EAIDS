@@ -7,13 +7,15 @@ import { C, frame, responsive } from "../lib/chart";
 type Marker = (typeof bio.markers)[number];
 type Point = Marker["by_decile"][number];
 
+const SHORT: Record<string, string> = { "Systolic blood pressure": "Systolic BP", "LDL cholesterol": "LDL" };
+
 export function mountBiomarkers(host: HTMLElement): void {
-  host.classList.add("multiples");
   bio.markers.forEach((mk) => {
     const cell = document.createElement("div");
     const sign = mk.gap >= 0 ? "+" : "−";
-    cell.innerHTML = `<h6>${mk.label}</h6><div class="unit-note">${mk.unit} · ${mk.direction}</div><div class="chart"></div>
-      <div class="gap">Black − White at same score: ${sign}${Math.abs(mk.gap).toFixed(mk.gap > 10 ? 1 : 2)}</div>`;
+    const worse = mk.direction.startsWith("higher") ? "↑ worse" : "↓ worse";
+    cell.innerHTML = `<h6>${SHORT[mk.label] ?? mk.label}</h6><div class="unit-note">${mk.unit} · ${worse}</div><div class="chart" data-fill></div>
+      <div class="gap">Black − White: ${sign}${Math.abs(mk.gap).toFixed(Math.abs(mk.gap) >= 10 ? 1 : 2)}</div>`;
     host.appendChild(cell);
     const el = cell.querySelector<HTMLElement>(".chart")!;
     responsive(el, () => draw(el, mk));
@@ -21,8 +23,7 @@ export function mountBiomarkers(host: HTMLElement): void {
 }
 
 function draw(el: HTMLElement, mk: Marker): void {
-  const m = { top: 8, right: 6, bottom: 22, left: 34 };
-  const f = frame(el, 0.85, m, 130, 200);
+  const f = frame(el, 0.9, { top: 0.5, right: 0.4, bottom: 1.5, left: 2.2 }, 120);
   const pts = mk.by_decile;
   const vals = pts.flatMap((p) => [p.b[1], p.b[2], p.w[1], p.w[2]]).filter((v): v is number => v != null);
   const [lo, hi] = extent(vals) as [number, number];
@@ -32,17 +33,10 @@ function draw(el: HTMLElement, mk: Marker): void {
     .domain([lo - pad, hi + pad])
     .range([f.innerH, 0])
     .nice(4);
-  const ticks = y.ticks(4);
   const grid = f.g.append("g").attr("class", "grid");
-  ticks.forEach((t) => {
+  y.ticks(4).forEach((t) => {
     grid.append("line").attr("x1", 0).attr("x2", f.innerW).attr("y1", y(t)).attr("y2", y(t));
-    grid.append("text")
-      .attr("class", "tick-label")
-      .attr("x", -5)
-      .attr("y", y(t))
-      .attr("dy", "0.32em")
-      .attr("text-anchor", "end")
-      .text(t >= 100 ? t.toFixed(0) : t.toFixed(1));
+    grid.append("text").attr("class", "tick-label").attr("x", -0.3 * f.r).attr("y", y(t)).attr("dy", "0.32em").attr("text-anchor", "end").text(t >= 100 ? t.toFixed(0) : t.toFixed(1));
   });
   const ax = f.g.append("g").attr("class", "axis").attr("transform", `translate(0,${f.innerH})`);
   ax.append("line").attr("x1", 0).attr("x2", f.innerW);
@@ -50,11 +44,10 @@ function draw(el: HTMLElement, mk: Marker): void {
     ax.append("text")
       .attr("class", "tick-label")
       .attr("x", x(d))
-      .attr("y", 15)
+      .attr("y", 1 * f.r)
       .attr("text-anchor", d === 0 ? "start" : "end")
       .text(d === 0 ? "low score" : "high score");
   });
-
   (["w", "b"] as const).forEach((race) => {
     const color = race === "b" ? C.black : C.white;
     const band = area<Point>()
@@ -65,6 +58,6 @@ function draw(el: HTMLElement, mk: Marker): void {
       .x((p) => x(p.d))
       .y((p) => y(p[race][0]!));
     f.g.append("path").attr("d", band(pts)).attr("fill", color).attr("opacity", 0.16);
-    f.g.append("path").attr("d", mid(pts)).attr("fill", "none").attr("stroke", color).attr("stroke-width", 1.8);
+    f.g.append("path").attr("d", mid(pts)).attr("fill", "none").attr("stroke", color).attr("stroke-width", 2);
   });
 }

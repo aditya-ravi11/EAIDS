@@ -3,46 +3,35 @@ import aia from "../../content/aia.json";
 import raci from "../../content/raci.json";
 import principles from "../../content/principles.json";
 import regulatory from "../../content/regulatory.json";
-import timeline from "../../content/timeline.json";
 import narrative from "../../content/narrative.json";
 import references from "../../content/references.json";
-import labels from "./data/labels.json";
 import calibration from "./data/calibration.json";
 import swap from "./data/swap.json";
 import mechanism from "./data/mechanism.json";
+import labels from "./data/labels.json";
 import { fmt, segmented } from "./lib/chart";
 
 const $ = <T extends HTMLElement = HTMLElement>(sel: string) => document.querySelector<T>(sel)!;
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 const REF_INDEX = new Map(references.refs.map((r, i) => [r.id, i + 1]));
-const cite = (ids: string[]) =>
+
+export const cite = (ids: string[]) =>
   ids
     .filter((id) => REF_INDEX.has(id))
-    .map((id) => `<a class="cite" href="#ref-${id}">[${REF_INDEX.get(id)}]</a>`)
+    .map((id) => `<a class="cite" href="#/conclusion/limits" data-ref="${id}">[${REF_INDEX.get(id)}]</a>`)
     .join("");
 
-function renderTimeline(): void {
-  $("#timeline").innerHTML = timeline.items
-    .map(
-      (t) => `<li class="tl-item k-${t.kind}">
-        <div class="tl-date">${esc(t.date)}</div><div class="tl-dot"></div>
-        <div class="tl-body"><strong>${esc(t.title)}.</strong> <span>${t.text}</span>${cite(t.refs ?? [])}</div>
-        <div class="tl-juris">${esc(t.juris)}</div></li>`,
-    )
-    .join("");
-}
-
-function renderCharges(): void {
+function renderIssues(): void {
   $("#charges").innerHTML = issues.issues
     .map(
-      (e) => `<div class="charge">
-        <div class="charge-no">${e.id}</div>
-        <h4>${esc(e.title)}</h4>
-        <p>${esc(e.text)}</p>
-        <div class="charge-tag">${esc(e.stage)}<br/><span class="sev" aria-label="Severity ${e.severity} of 3">${[1, 2, 3]
+      (e) => `<div class="issue">
+        <div class="issue-top"><span class="issue-no">${e.id}</span><span class="sev" aria-label="Severity ${e.severity} of 3">${[1, 2, 3]
           .map((i) => `<i class="${i <= e.severity ? "on" : ""}"></i>`)
           .join("")}</span></div>
+        <h4>${esc(e.title)}</h4>
+        <p>${esc(e.text)}</p>
+        <span class="stage-tag">${esc(e.stage)}</span>
       </div>`,
     )
     .join("");
@@ -51,11 +40,11 @@ function renderCharges(): void {
 function renderCrosswalk(): void {
   const t = $<HTMLTableElement>("#xwalk");
   const fw = principles.frameworks;
-  t.innerHTML = `<thead><tr><th>Principle · how it was breached</th>${fw
-    .map((f, i) => `<th data-col="${i}">${esc(f.label)}${cite([f.ref])}<br/><span style="font-weight:400;color:var(--ink-3)">${esc(f.sub)}</span></th>`)
+  t.innerHTML = `<thead><tr><th>Principle</th>${fw
+    .map((f, i) => `<th data-col="${i}">${esc(f.label)}<span class="sub">${esc(f.sub)}</span></th>`)
     .join("")}</tr></thead><tbody>${principles.principles
     .map(
-      (p) => `<tr><th>${esc(p.name)}<br/><span style="font-weight:400;font-size:.74rem;color:var(--ink-3)">${esc(p.breach)}</span></th>${fw
+      (p) => `<tr><th>${esc(p.name)}<span class="sub">${esc(p.breach)}</span></th>${fw
         .map((f, i) => `<td data-col="${i}">${esc((p.cells as Record<string, string>)[f.key])}</td>`)
         .join("")}</tr>`,
     )
@@ -68,32 +57,51 @@ function renderCrosswalk(): void {
   t.addEventListener("pointerleave", () => t.querySelectorAll(".is-x").forEach((c) => c.classList.remove("is-x")));
 }
 
-function renderGates(): void {
-  $("#gates").innerHTML = aia.gates
-    .map(
-      (g) => `<li class="gate${g.decisive ? " is-decisive" : ""}">
-        <div class="gate-id">${g.id}<small>${g.decisive ? "decisive" : "gate"}</small></div>
-        <div><h4>${esc(g.name)}</h4><p>${esc(g.question)}</p></div>
-        <dl><dt>Evidence</dt><dd>${esc(g.evidence)}</dd><dt>Pass if</dt><dd>${esc(g.criterion)}</dd><dt>Legal hooks</dt><dd>${esc(g.hooks)}</dd></dl>
-      </li>`,
-    )
-    .join("");
-}
-
-const VERDICT_LABEL: Record<string, [string, string]> = {
+const VERDICT: Record<string, [string, string]> = {
   failed: ["Failed", "x"],
   "not-performed": ["Not performed", "n"],
   partial: ["Partial", "p"],
 };
 
+function renderGates(): void {
+  const host = $("#gates");
+  host.innerHTML = `<div class="gates">${aia.gates
+    .map((g, i) => {
+      const [label, mark] = VERDICT[g.retro.verdict];
+      return `<button class="gate-btn${g.decisive ? " decisive" : ""}" data-i="${i}" type="button">
+        <span class="gid">${g.id}</span><span class="gname">${esc(g.name)}</span>
+        <span class="gver"><i class="mark ${mark}"></i>${label}</span></button>`;
+    })
+    .join("")}</div><div class="gate-detail"></div>`;
+  const detail = host.querySelector<HTMLElement>(".gate-detail")!;
+  const select = (i: number) => {
+    const g = aia.gates[i];
+    const [label, mark] = VERDICT[g.retro.verdict];
+    host.querySelectorAll(".gate-btn").forEach((b) => b.classList.toggle("is-on", (b as HTMLElement).dataset.i === String(i)));
+    detail.innerHTML = `<div>
+        <h4>${g.id} · ${esc(g.name)}</h4>
+        <p class="q">${esc(g.question)}</p>
+        <dl><dt>Evidence</dt><dd>${esc(g.evidence)}</dd><dt>Pass if</dt><dd>${esc(g.criterion)}</dd><dt>Legal hooks</dt><dd>${esc(g.hooks)}</dd></dl>
+      </div>
+      <div class="side-col">
+        <div class="retro ${g.retro.verdict}"><b>The deployment we studied</b><div class="rv"><i class="mark ${mark}"></i>${label}</div><p>${esc(g.retro.note)}</p></div>
+        <div class="levels"><b>Impact level for this tool (Canada's DADM scale)</b><div class="level-row">${aia.impact_levels
+          .map((l) => `<div class="level${l.level === "III" || l.level === "IV" ? " on" : ""}"><strong>${l.level}</strong>${esc(l.requires)}</div>`)
+          .join("")}</div></div>
+      </div>`;
+  };
+  host.querySelectorAll<HTMLButtonElement>(".gate-btn").forEach((b) => b.addEventListener("click", () => select(Number(b.dataset.i))));
+  select(1);
+}
+
 function renderScorecard(): void {
   $("#scorecard").innerHTML = aia.gates
     .map((g) => {
-      const [label, mark] = VERDICT_LABEL[g.retro.verdict];
+      const [label, mark] = VERDICT[g.retro.verdict];
       return `<div class="score-cell ${g.retro.verdict}">
         <div class="gid">${g.id}</div>
         <div class="verdict-tag"><i class="mark ${mark}"></i>${label}</div>
-        <strong style="font-size:.8rem">${esc(g.name)}</strong>
+        <strong>${esc(g.name)}</strong>
         <p>${esc(g.retro.note)}</p></div>`;
     })
     .join("");
@@ -140,26 +148,6 @@ function renderActors(): void {
     .join("");
 }
 
-function renderLabelTable(): void {
-  const t = $<HTMLTableElement>("#label-table");
-  const best = (k: "cost_share" | "avoidable_share" | "health_share") => Math.max(...labels.rows.map((r) => r[k]));
-  const cell = (v: number, k: "cost_share" | "avoidable_share" | "health_share") =>
-    `<td class="n"${v === best(k) ? ' style="font-weight:600"' : ""}>${fmt.pct1(v)}</td>`;
-  t.innerHTML = `<caption>Table 8.1 · Who is in the top 3% under each label (hold-out, n = ${fmt.int(labels.n_holdout)})</caption>
-    <thead><tr><th>Ranking</th><th class="n">Black share</th><th class="n">95% CI</th><th class="n">Published</th>
-    <th class="n">Total cost captured</th><th class="n">Avoidable cost captured</th><th class="n">Chronic conditions captured</th><th class="n">Excess-conditions gap closed</th></tr></thead>
-    <tbody>${labels.rows
-      .map(
-        (r) => `<tr class="${r.key === "health" ? "is-hl" : ""}"><th>${esc(r.label)}</th>
-        <td class="n">${fmt.pct1(r.black_share)}</td>
-        <td class="n">${fmt.pct1(r.black_ci[0])}–${fmt.pct1(r.black_ci[1])}</td>
-        <td class="n">${r.paper_black_share == null ? "–" : fmt.pct1(r.paper_black_share)}</td>
-        ${cell(r.cost_share, "cost_share")}${cell(r.avoidable_share, "avoidable_share")}${cell(r.health_share, "health_share")}
-        <td class="n">${r.key === "cost" ? "ref." : fmt.pct0(r.excess_reduction)}</td></tr>`,
-      )
-      .join("")}</tbody>`;
-}
-
 type Mark = "y" | "p" | "n" | "x";
 interface RegCell {
   m: string;
@@ -173,8 +161,19 @@ function renderRegulatory(): void {
   const detail = $("#reg-detail");
   const juris = regulatory.jurisdictions;
   let year = "2026";
-  let selected: [number, string] = [0, "us"];
+  let selected: [number, string] = [7, "us"];
+  const cell = (oi: number, jk: string) => (regulatory.obligations[oi].cells as Record<string, Record<string, RegCell>>)[jk][year];
 
+  const showDetail = () => {
+    const [oi, jk] = selected;
+    const c = cell(oi, jk);
+    const j = juris.find((x) => x.key === jk)!;
+    const yearLabel = regulatory.years.find((y) => y.key === year)!.label;
+    detail.innerHTML = `<h5>${esc(regulatory.obligations[oi].label)} · ${esc(j.label)} · ${esc(yearLabel)}</h5>
+      <div class="rd-t"><i class="mark ${c.m}"></i>${esc(c.t)}</div>
+      <p>${c.d}</p>
+      ${c.src.length ? `<div class="src">Sources: ${c.src.map((id) => `${cite([id])} ${esc(references.refs.find((r) => r.id === id)?.short ?? id)}`).join(" · ")}</div>` : ""}`;
+  };
   const draw = () => {
     host.innerHTML =
       `<div class="reg-h">Obligation</div>` +
@@ -185,7 +184,7 @@ function renderRegulatory(): void {
             `<div class="reg-row">${esc(o.label)}</div>` +
             juris
               .map((j) => {
-                const c = (o.cells as Record<string, Record<string, RegCell>>)[j.key][year];
+                const c = cell(oi, j.key);
                 const on = selected[0] === oi && selected[1] === j.key;
                 return `<div><button class="cell" data-o="${oi}" data-j="${j.key}" aria-pressed="${on}"><i class="mark ${c.m as Mark}"></i><span>${esc(c.t)}</span></button></div>`;
               })
@@ -194,18 +193,6 @@ function renderRegulatory(): void {
         .join("");
     showDetail();
   };
-
-  const showDetail = () => {
-    const [oi, jk] = selected;
-    const o = regulatory.obligations[oi];
-    const j = juris.find((x) => x.key === jk)!;
-    const c = (o.cells as Record<string, Record<string, RegCell>>)[jk][year];
-    const yearLabel = regulatory.years.find((y) => y.key === year)!.label;
-    detail.innerHTML = `<h5>${esc(o.label)} · ${esc(j.label)} · ${esc(yearLabel)}</h5>
-      <p><i class="mark ${c.m}" style="margin-right:.5rem"></i><strong>${esc(c.t)}.</strong> ${c.d}</p>
-      <div class="src">Sources: ${c.src.map((id) => `${cite([id])} ${esc(references.refs.find((r) => r.id === id)?.short ?? id)}`).join(" · ")}</div>`;
-  };
-
   host.addEventListener("click", (ev) => {
     const b = (ev.target as HTMLElement).closest<HTMLButtonElement>("button.cell");
     if (!b) return;
@@ -213,7 +200,6 @@ function renderRegulatory(): void {
     host.querySelectorAll("button.cell").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
     showDetail();
   });
-
   segmented(
     $("#reg-year"),
     regulatory.years.map((y) => ({ value: y.key, label: y.label })),
@@ -234,7 +220,7 @@ function renderRegulatory(): void {
 function renderFidelity(): void {
   const rows: [string, string, string][] = [
     ["Patient-years", "100,009 (real)", `${fmt.int(48784)} (synthetic)`],
-    ["Black share at or above 97th percentile", "17.7%", fmt.pct1(calibration.top3.black_share.est)],
+    ["Black share at or above the 97th percentile", "17.7%", fmt.pct1(calibration.top3.black_share.est)],
     [
       "Chronic conditions at ≥ 97th, Black vs White",
       "4.8 vs 3.8 (+26%)",
@@ -245,20 +231,21 @@ function renderFidelity(): void {
     ["Swap at 97th, corrected code", "→ 59%", `→ ${fmt.pct1(swap.at97.fixed)}`],
     ...labels.rows
       .filter((r) => r.paper_black_share != null)
-      .map((r): [string, string, string] => [`Black share, top 3%, ${r.label.toLowerCase()} label`, fmt.pct1(r.paper_black_share!), fmt.pct1(r.black_share)]),
-    ["Excess-conditions reduction, combined label", "84% (vendor, 3.7M patients)", `${fmt.pct0(labels.rows.find((r) => r.key === "health")!.excess_reduction)} (health label)`],
+      .map((r): [string, string, string] => [`Black share of top 3%, ${r.label.toLowerCase()} label`, fmt.pct1(r.paper_black_share!), fmt.pct1(r.black_share)]),
   ];
-  $("#fidelity").innerHTML = `<caption>Table 8.2 · Published values (real data) and our replication (synthetic data)</caption>
-    <thead><tr><th>Quantity</th><th class="n">Obermeyer et al. 2019</th><th class="n">This project</th></tr></thead>
+  $("#fidelity").innerHTML = `<thead><tr><th>Quantity</th><th class="n">Obermeyer et al. 2019</th><th class="n">This project</th></tr></thead>
     <tbody>${rows.map((r) => `<tr><th>${esc(r[0])}</th><td class="n">${esc(r[1])}</td><td class="n">${esc(r[2])}</td></tr>`).join("")}</tbody>`;
 }
 
 function renderNarrative(): void {
-  $("#findings").innerHTML = narrative.findings.map((f) => `<li><div><strong>${f.title}</strong><p>${f.text}</p></div></li>`).join("");
-  $("#qa").innerHTML = narrative.qa.map((q) => `<div class="qa-item"><h4>${esc(q.q)}</h4><p>${q.a}</p></div>`).join("");
+  $("#findings").innerHTML = narrative.findings.map((f) => `<li><strong>${f.title}</strong><p>${f.text}</p></li>`).join("");
+  $("#qa").innerHTML =
+    `<div class="qa-item lead"><h4>In one line</h4><p>The bias could be detected with data every hospital already holds, and largely fixed by changing the label. What was missing was any obligation to look.</p></div>` +
+    narrative.qa.map((q) => `<div class="qa-item"><h4>${esc(q.q)}</h4><p>${q.a}</p></div>`).join("");
 }
 
-type Ref = (typeof references.refs)[number] & Partial<Record<"volume" | "number" | "pages" | "month" | "edition" | "publisher" | "address" | "url" | "container", string>>;
+type Ref = (typeof references.refs)[number] &
+  Partial<Record<"volume" | "number" | "pages" | "month" | "edition" | "publisher" | "address" | "url" | "container", string>>;
 
 /** IEEE-style reference text, from the same fields that generate the report's BibTeX. */
 function formatRef(r: Ref): string {
@@ -281,26 +268,19 @@ function formatRef(r: Ref): string {
 function renderRefs(): void {
   $("#refs").innerHTML = (references.refs as Ref[])
     .map((r) => {
-      const url = r.url ? ` <a href="${r.url}">${esc(r.url.replace(/^https?:\/\//, ""))}</a>` : "";
+      const url = r.url ? ` <a href="${r.url}" target="_blank" rel="noopener">${esc(r.url.replace(/^https?:\/\//, ""))}</a>` : "";
       return `<li id="ref-${r.id}">${formatRef(r)}${url}</li>`;
     })
     .join("");
-  document.querySelectorAll<HTMLAnchorElement>("a.cite[data-ref]").forEach((a) => {
-    const id = a.dataset.ref!;
-    a.href = `#ref-${id}`;
-    a.textContent = `[${REF_INDEX.get(id) ?? "?"}]`;
-  });
 }
 
 export function renderContent(): void {
-  renderTimeline();
-  renderCharges();
+  renderIssues();
   renderCrosswalk();
   renderGates();
   renderScorecard();
   renderRaci();
   renderActors();
-  renderLabelTable();
   renderRegulatory();
   renderFidelity();
   renderNarrative();
