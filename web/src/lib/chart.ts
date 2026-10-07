@@ -140,7 +140,9 @@ export function thresholds(g: G, x: ScaleContinuousNumeric<number, number>, inne
 
 /** Re-run a draw function whenever the element changes width. */
 export function responsive(el: HTMLElement, draw: () => void): void {
-  let last = 0;
+  // Draw once immediately; ResizeObserver callbacks can be delayed in background tabs.
+  draw();
+  let last = el.clientWidth;
   const ro = new ResizeObserver(() => {
     const w = el.clientWidth;
     if (Math.abs(w - last) > 2) {
