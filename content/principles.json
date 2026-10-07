@@ -1,0 +1,104 @@
+{
+  "frameworks": [
+    { "key": "bio", "label": "Principlism", "sub": "Beauchamp & Childress", "ref": "beauchamp2019" },
+    { "key": "who", "label": "WHO 2021", "sub": "Ethics & governance of AI for health", "ref": "who2021" },
+    { "key": "icmr", "label": "ICMR 2023", "sub": "AI in biomedical research & healthcare", "ref": "icmr2023" },
+    { "key": "niti", "label": "NITI Aayog 2021", "sub": "Responsible AI for All", "ref": "niti2021" },
+    { "key": "meity", "label": "MeitY 2025", "sub": "India AI Governance Guidelines", "ref": "meity2025" },
+    { "key": "nist", "label": "NIST AI RMF", "sub": "AI 100-1 (2023)", "ref": "nist2023" },
+    { "key": "hleg", "label": "EU HLEG", "sub": "Trustworthy AI (2019)", "ref": "hleg2019" }
+  ],
+  "principles": [
+    {
+      "name": "Justice & non-discrimination",
+      "breach": "Equal need, unequal access to the programme. Primary breach (E1–E3).",
+      "cells": {
+        "bio": "Justice",
+        "who": "Ensure inclusiveness and equity",
+        "icmr": "Non-discrimination and fairness; accessibility, equity and inclusiveness",
+        "niti": "Equality; inclusivity and non-discrimination",
+        "meity": "Fairness & equity",
+        "nist": "Fair, with harmful bias managed",
+        "hleg": "Diversity, non-discrimination and fairness"
+      }
+    },
+    {
+      "name": "Beneficence & non-maleficence",
+      "breach": "Preventive care withheld from sicker patients; avoidable deterioration (E3, E8).",
+      "cells": {
+        "bio": "Beneficence; non-maleficence",
+        "who": "Promote human well-being, safety and the public interest",
+        "icmr": "Safety and risk minimisation",
+        "niti": "Safety and reliability",
+        "meity": "Safety, resilience & sustainability",
+        "nist": "Safe",
+        "hleg": "Technical robustness and safety"
+      }
+    },
+    {
+      "name": "Validity of what is measured",
+      "breach": "Cost was assumed, never tested, to measure need (E1).",
+      "cells": {
+        "bio": "—",
+        "who": "Well-being: accuracy and efficacy in intended use",
+        "icmr": "Validity; optimisation of data quality",
+        "niti": "Safety and reliability",
+        "meity": "Safety, resilience & sustainability",
+        "nist": "Valid and reliable",
+        "hleg": "Technical robustness and safety"
+      }
+    },
+    {
+      "name": "Transparency & explicability",
+      "breach": "Proprietary score, undisclosed label, patients unaware (E4).",
+      "cells": {
+        "bio": "Veracity (derived)",
+        "who": "Ensure transparency, explainability and intelligibility",
+        "icmr": "Trustworthiness",
+        "niti": "Transparency",
+        "meity": "Understandable by design",
+        "nist": "Explainable and interpretable",
+        "hleg": "Transparency"
+      }
+    },
+    {
+      "name": "Accountability & responsibility",
+      "breach": "Many hands, no owner, no audit trail (E6, E7).",
+      "cells": {
+        "bio": "—",
+        "who": "Foster responsibility and accountability",
+        "icmr": "Accountability and liability",
+        "niti": "Accountability",
+        "meity": "Accountability",
+        "nist": "Accountable and transparent",
+        "hleg": "Accountability"
+      }
+    },
+    {
+      "name": "Autonomy & human oversight",
+      "breach": "Review existed but deferred to the score (E5).",
+      "cells": {
+        "bio": "Respect for autonomy",
+        "who": "Protect human autonomy",
+        "icmr": "Autonomy",
+        "niti": "Protection and reinforcement of positive human values",
+        "meity": "People first",
+        "nist": "— (GOVERN: human–AI roles)",
+        "hleg": "Human agency and oversight"
+      }
+    },
+    {
+      "name": "Privacy & data governance",
+      "breach": "Tension: auditing needs race data that privacy rules restrict (E2).",
+      "cells": {
+        "bio": "Confidentiality (derived)",
+        "who": "Protect autonomy: privacy and confidentiality",
+        "icmr": "Data privacy",
+        "niti": "Privacy and security",
+        "meity": "Trust is the foundation",
+        "nist": "Privacy-enhanced",
+        "hleg": "Privacy and data governance"
+      }
+    }
+  ]
+}

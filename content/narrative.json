@@ -1,0 +1,54 @@
+{
+  "findings": [
+    {
+      "title": "The bias replicates, and the corrected analysis is starker than the published one.",
+      "text": "At the same score, Black patients carry <span class=\"num\" data-num=\"calibration.gap_health.est\" data-fmt=\"num2\"></span> more chronic conditions, while the score's calibration on cost is statistically indistinguishable across races. The corrected swap moves the Black share of the auto-identified group from <span class=\"num\" data-num=\"swap.at97.before\" data-fmt=\"pct1\"></span> to <span class=\"num\" data-num=\"swap.at97.fixed\" data-fmt=\"pct1\"></span>, matching the authors' 2022 erratum."
+    },
+    {
+      "title": "The label, not the model, is the cause.",
+      "text": "Identical features and model class, different targets: the Black share of the top 3% rises from <span class=\"num\" data-num=\"labels.rows.1.black_share\" data-fmt=\"pct1\"></span> (cost) to <span class=\"num\" data-num=\"labels.rows.2.black_share\" data-fmt=\"pct1\"></span> (avoidable cost) to <span class=\"num\" data-num=\"labels.rows.3.black_share\" data-fmt=\"pct1\"></span> (chronic conditions). The health label closes <span class=\"num\" data-num=\"labels.rows.3.excess_reduction\" data-fmt=\"pct0\"></span> of the excess-conditions gap."
+    },
+    {
+      "title": "Mitigation is cheap.",
+      "text": "A blended label with α = 0.6 keeps the cost captured by the top 3% at <span class=\"num\" data-num=\"blend.rows.12.k3.cost\" data-fmt=\"pct1\"></span> (cost-only: <span class=\"num\" data-num=\"blend.rows.20.k3.cost\" data-fmt=\"pct1\"></span>) while raising the Black share to <span class=\"num\" data-num=\"blend.rows.12.k3.black\" data-fmt=\"pct1\"></span> and closing <span class=\"num\" data-num=\"blend.rows.12.excess_reduction\" data-fmt=\"pct0\"></span> of the gap. The trade-off a hospital feared largely does not exist."
+    },
+    {
+      "title": "Human review did not save the score.",
+      "text": "Enrolled Black patients were <span class=\"num\" data-num=\"human.conditions_gap.est\" data-fmt=\"num2\"></span> chronic conditions sicker than enrolled White patients. A clinician in the loop is not oversight unless their decisions are audited too."
+    },
+    {
+      "title": "A single test at gate G1 would have caught it.",
+      "text": "The decisive check (does the label measure need equally across groups?) needs only data a hospital already holds. Against our seven-gate AIA, the deployment failed G1 and did not perform four of the other six gates."
+    },
+    {
+      "title": "Seven years on, no jurisdiction clearly requires that test for this deployment.",
+      "text": "The EU comes closest, through the DPIA requirement and anti-discrimination law, but its AI Act duties are delayed to December 2027 and probably do not reach a private hospital. US federal duties are keyed to inputs, not labels, and the disparate-impact route has narrowed since 2019. India relies on soft law until DPDP duties begin in May 2027."
+    }
+  ],
+  "qa": [
+    {
+      "q": "Who is responsible?",
+      "a": "Responsibility is shared, but accountability is not. The vendor is responsible for the label and for disclosing what it measures. The <strong>deploying hospital is accountable</strong> for the outcome, because it chose the tool, set the threshold and used the score to ration care; where a payer licenses or mandates the tool, it shares that accountability. Clinicians are responsible for their own enrolment decisions, which must be audited. Regulators are accountable for leaving the floor unset."
+    },
+    {
+      "q": "What assessment should have been required?",
+      "a": "A pre-deployment algorithmic impact assessment at Canada's Level III–IV, built around a <strong>label-validity test</strong> (gate G1): plot need against the score by group before use. Add disparity testing against a need-based reference, a stakeholder and rights review, a mitigation plan evaluated on the fairness–cost frontier, a signed and published go/no-go decision, and scheduled re-assessment."
+    },
+    {
+      "q": "Would US law mandate it now?",
+      "a": "<strong>No.</strong> Section 1557's AI rule (45 CFR 92.210) prohibits discrimination through decision-support tools, but its duty to identify and mitigate risk is keyed to tools whose <em>inputs</em> measure protected traits, which a race-blind cost proxy avoids. HHS removed its Title VI disparate-impact provisions in 2026. Colorado's replacement statute (from 2027) requires notice, not assessment. On this specific harm, US protection is arguably weaker than in 2019."
+    },
+    {
+      "q": "Would EU law mandate it now?",
+      "a": "<strong>Partly.</strong> GDPR already required a data-protection impact assessment for large-scale health-data processing, and the Race Equality Directive prohibits indirect discrimination in healthcare. The AI Act's high-risk duties (risk management, bias examination, fundamental-rights assessment) would bite hardest, but they now start on 2 December 2027 and probably cover a <em>public</em> hospital or one acting for a public body, not a private one."
+    },
+    {
+      "q": "Would Indian law mandate it now?",
+      "a": "<strong>Not yet.</strong> India has strong principles (ICMR 2023, NITI Aayog 2021, MeitY 2025) but they are voluntary. The DPDP Act's binding duties start in May 2027, and its algorithmic due-diligence rule applies only to entities designated as Significant Data Fiduciaries. Constitutional equality guarantees bind public hospitals, not private ones."
+    }
+  ],
+  "india": [
+    "India's equivalent of this harm would not run along race. It would run along <strong>caste, gender, geography and income</strong>. Under PM-JAY, utilisation data show lower hospitalisation claims for women and for some disadvantaged social groups relative to need, though national figures are contested. A model trained on claims or spending would learn those access gaps as lower risk, exactly as Impact Pro did.",
+    "The DPDP Act creates no special category of sensitive data and no right concerning automated decisions. That leaves hospitals free to collect caste or gender data for audits, but under no obligation to run them. Until binding duties arrive, the strongest lever is procurement: <strong>public insurers and state health agencies</strong>, who are bound by Articles 14 and 15, can require a G1 label-validity test from every vendor."
+  ]
+}

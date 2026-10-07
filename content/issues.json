@@ -1,0 +1,60 @@
+{
+  "issues": [
+    {
+      "id": "E1",
+      "title": "Proxy-label bias",
+      "stage": "Design",
+      "severity": 3,
+      "text": "The target variable (future cost) is a biased measure of the construct the programme cares about (future health need). Unequal access means equal need produces unequal spending, so an accurate cost model is an inaccurate need model."
+    },
+    {
+      "id": "E2",
+      "title": "Fairness through unawareness fails",
+      "stage": "Design",
+      "severity": 3,
+      "text": "Race was excluded from the inputs, and that exclusion was treated as a fairness guarantee. The disparity entered through the label, so a race-blind model reproduced it anyway. Leaving race out also stopped anyone from measuring the disparity."
+    },
+    {
+      "id": "E3",
+      "title": "Structural inequity encoded and amplified",
+      "stage": "Design · Deployment",
+      "severity": 3,
+      "text": "Historical under-treatment becomes a reason for future under-treatment. Patients who received less care are scored as lower-risk, are offered less care, and generate less cost again: a feedback loop."
+    },
+    {
+      "id": "E4",
+      "title": "Opacity to deployers and patients",
+      "stage": "Governance",
+      "severity": 2,
+      "text": "The score was proprietary. Hospitals received a number without subgroup performance or a plain statement that it predicts spending. Patients were never told that an algorithm had ranked them for extra care."
+    },
+    {
+      "id": "E5",
+      "title": "Automation bias and thin oversight",
+      "stage": "Deployment",
+      "severity": 2,
+      "text": "Clinicians reviewed referrals, but our analysis shows enrolled Black patients were still markedly sicker than enrolled White patients. Human review existed on paper but did not correct the score."
+    },
+    {
+      "id": "E6",
+      "title": "The problem of many hands",
+      "stage": "Governance",
+      "severity": 3,
+      "text": "Vendor, payer, hospital, data team and clinicians each controlled one link. Each could reasonably say the label, the threshold or the final decision was someone else's, so in practice no one owned the outcome."
+    },
+    {
+      "id": "E7",
+      "title": "No pre-deployment assessment or monitoring",
+      "stage": "Governance",
+      "severity": 3,
+      "text": "Nothing required a test of whether the score measured need equally before it rationed care. The bias was found years later by outside academics, not by any internal audit or regulator."
+    },
+    {
+      "id": "E8",
+      "title": "Scale and replication of harm",
+      "stage": "Governance",
+      "severity": 2,
+      "text": "One design choice, copied across a product class applied to roughly 200 million people a year, turns a modelling shortcut into a population-level allocation decision about who gets preventive care."
+    }
+  ]
+}

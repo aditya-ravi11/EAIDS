@@ -1,0 +1,70 @@
+{
+  "roles": [
+    { "key": "vendor", "label": "Vendor", "duty": "Owns the label. Must disclose what the score predicts, subgroup calibration on need as well as cost, and known limitations, and must fix the model when a deployer's audit fails." },
+    { "key": "gov", "label": "Hospital AI governance", "duty": "The accountable party for deployment. Commissions the AIA, approves or blocks go-live, sets re-assessment triggers and answers to patients and regulators for the outcome." },
+    { "key": "ds", "label": "Hospital data science", "duty": "Runs the local label-validity and disparity tests (G1–G2), sets thresholds against capacity, and builds the monitoring dashboard." },
+    { "key": "clin", "label": "Clinicians / care managers", "duty": "Make the final enrolment decision, can override the score with recorded reasons, and report suspected misses. Their decisions are audited by group too." },
+    { "key": "equity", "label": "Equity / ethics officer", "duty": "Independent check on G1–G3, runs the patient panel, and handles complaints from people who were ranked." },
+    { "key": "payer", "label": "Payer", "duty": "Where the payer licenses or mandates the tool, it shares responsibility for its effects (Section 1557 reaches covered health programmes)." },
+    { "key": "patients", "label": "Patients / community", "duty": "Are told an algorithm is used, are consulted on the AIA, and can contest a referral decision." },
+    { "key": "regulator", "label": "Regulator", "duty": "Sets the binding floor: what must be assessed, disclosed and monitored, and enforces it." }
+  ],
+  "activities": [
+    { "name": "Choose the model's label", "cells": { "vendor": "A/R", "gov": "C", "ds": "C", "clin": "I", "equity": "C", "payer": "C", "patients": "I", "regulator": "I" } },
+    { "name": "Disclose label & subgroup performance", "cells": { "vendor": "A/R", "gov": "I", "ds": "C", "clin": "I", "equity": "I", "payer": "I", "patients": "I", "regulator": "I" } },
+    { "name": "Local label-validity & bias audit (G1–G2)", "cells": { "vendor": "C", "gov": "A", "ds": "R", "clin": "C", "equity": "R", "payer": "I", "patients": "I", "regulator": "I" } },
+    { "name": "Set threshold & capacity", "cells": { "vendor": "C", "gov": "A", "ds": "R", "clin": "C", "equity": "C", "payer": "C", "patients": "I", "regulator": "I" } },
+    { "name": "Approve deployment (G5)", "cells": { "vendor": "I", "gov": "A/R", "ds": "C", "clin": "C", "equity": "C", "payer": "I", "patients": "C", "regulator": "I" } },
+    { "name": "Review & override referrals", "cells": { "vendor": "I", "gov": "A", "ds": "I", "clin": "R", "equity": "C", "payer": "I", "patients": "I", "regulator": "I" } },
+    { "name": "Monitor & report incidents (G6)", "cells": { "vendor": "C", "gov": "A", "ds": "R", "clin": "R", "equity": "C", "payer": "I", "patients": "I", "regulator": "I" } },
+    { "name": "Retrain or replace the model", "cells": { "vendor": "R", "gov": "A", "ds": "R", "clin": "I", "equity": "C", "payer": "C", "patients": "I", "regulator": "I" } },
+    { "name": "Patient notice & complaints", "cells": { "vendor": "I", "gov": "A", "ds": "I", "clin": "R", "equity": "R", "payer": "I", "patients": "C", "regulator": "I" } },
+    { "name": "Set & enforce the legal floor", "cells": { "vendor": "I", "gov": "I", "ds": "I", "clin": "I", "equity": "I", "payer": "I", "patients": "C", "regulator": "A/R" } }
+  ],
+  "actors": [
+    {
+      "who": "Vendors",
+      "actions": [
+        "State the training label in the first line of documentation, not the appendix.",
+        "Report calibration on need (conditions, biomarkers) by race, sex and age, alongside calibration on cost.",
+        "Offer a health-weighted or blended-label version, as the vendor did after 2019."
+      ]
+    },
+    {
+      "who": "Deploying hospitals",
+      "actions": [
+        "Run gates G0–G6 before go-live and on every new version or threshold.",
+        "Name one accountable executive and publish the assessment summary.",
+        "Collect race and ethnicity data for auditing, under strict purpose limitation."
+      ]
+    },
+    {
+      "who": "Clinicians",
+      "actions": [
+        "Treat the score as a referral aid, not an eligibility test; record override reasons.",
+        "Audit enrolment decisions by group quarterly, alongside the score itself."
+      ]
+    },
+    {
+      "who": "US regulators",
+      "actions": [
+        "Extend 45 CFR 92.210(b) to tools whose labels, not only inputs, can encode protected-trait disparities.",
+        "Restore an effects-based route for proxy discrimination in federally funded health programmes."
+      ]
+    },
+    {
+      "who": "EU regulators",
+      "actions": [
+        "Clarify that private hospitals rationing access to care fall under Annex III 5(a) or a FRIA-equivalent duty.",
+        "Use the new Art 4a bias-detection basis to require, not just permit, subgroup testing."
+      ]
+    },
+    {
+      "who": "Indian regulators",
+      "actions": [
+        "Turn ICMR's validity and fairness principles into binding pre-deployment checks for hospital AI.",
+        "Designate large health data fiduciaries as Significant Data Fiduciaries so Rule 13 algorithm checks apply."
+      ]
+    }
+  ]
+}

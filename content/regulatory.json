@@ -1,0 +1,209 @@
+{
+  "as_of": "2026-10-07",
+  "rubric": {
+    "y": "Binding duty that applies to this deployment (a hospital using a race-blind, cost-trained enrolment score) on that date.",
+    "p": "Binding, but narrow, not triggered by this tool, or adopted but not yet applicable. Soft law alone does not count.",
+    "n": "No binding duty. Voluntary guidance is noted in the detail.",
+    "x": "A protection that existed in 2019 has since been removed or deprioritised."
+  },
+  "jurisdictions": [
+    { "key": "us", "label": "United States", "sub": "federal + Colorado" },
+    { "key": "eu", "label": "European Union", "sub": "AI Act, GDPR, equality law" },
+    { "key": "in", "label": "India", "sub": "DPDP, MDR 2017, soft law" }
+  ],
+  "years": [
+    { "key": "2019", "label": "Oct 2019" },
+    { "key": "2026", "label": "Oct 2026" },
+    { "key": "2027", "label": "Dec 2027 (scheduled)" }
+  ],
+  "obligations": [
+    {
+      "key": "aia",
+      "label": "Pre-deployment impact assessment",
+      "cells": {
+        "us": {
+          "2019": { "m": "n", "t": "None", "d": "No federal or state law required a deploying hospital to assess an algorithm before use.", "src": [] },
+          "2026": { "m": "n", "t": "None in force", "d": "Colorado's 2024 AI Act would have required deployer impact assessments, but it never took effect: it was delayed to 30 June 2026 and then repealed and re-enacted by SB 26-189 without the assessment duty. The federal Algorithmic Accountability Act (reintroduced 2025) has not passed.", "src": ["colorado", "aaa2025"] },
+          "2027": { "m": "n", "t": "None scheduled", "d": "SB 26-189 (from 1 January 2027) is a notice-and-explanation regime with no impact assessment, and its enforcement is stayed pending xAI v. Weiser. Executive Order 14365 directs federal litigation against state AI laws.", "src": ["colorado", "eo14365"] }
+        },
+        "eu": {
+          "2019": { "m": "n", "t": "No AI-specific duty", "d": "No AI-specific assessment existed. The GDPR data-protection impact assessment (row 7) was the nearest instrument.", "src": ["gdpr"] },
+          "2026": { "m": "n", "t": "FRIA not yet applicable", "d": "The AI Act's fundamental-rights impact assessment (Art 27) is adopted, but the Digital Omnibus (Reg. 2026/1744) moved Annex III obligations to 2 December 2027.", "src": ["euaiact", "omnibus2026"] },
+          "2027": { "m": "p", "t": "FRIA for public bodies", "d": "From 2 December 2027, Art 27 requires a FRIA from deployers that are public-law bodies or private entities providing public services, for Annex III systems. Annex III 5(a) covers eligibility for essential public services, including healthcare, when decided <em>by or on behalf of public authorities</em>. A public hospital is likely covered; a private US-style hospital system probably is not. The FRIA can cross-reference an existing DPIA (Art 27(4)).", "src": ["euaiact", "omnibus2026"] }
+        },
+        "in": {
+          "2019": { "m": "n", "t": "None", "d": "No statute or regulation addressed algorithmic assessment in healthcare.", "src": [] },
+          "2026": { "m": "n", "t": "Guidance only", "d": "ICMR's 2023 guidelines and MeitY's 2025 AI Governance Guidelines recommend risk assessment and ethics review, but neither is binding on a hospital's operational use of a risk score.", "src": ["icmr2023", "meity2025"] },
+          "2027": { "m": "n", "t": "Guidance only", "d": "No AI-specific assessment duty is scheduled. MeitY's guidelines explicitly prefer voluntary measures to a new AI law.", "src": ["meity2025"] }
+        }
+      }
+    },
+    {
+      "key": "bias",
+      "label": "Bias or subgroup testing",
+      "cells": {
+        "us": {
+          "2019": { "m": "n", "t": "None", "d": "No duty to test decision-support tools for subgroup performance.", "src": [] },
+          "2026": { "m": "p", "t": "§92.210(b)–(c), inputs only", "d": "Since 1 May 2025, covered entities must make reasonable efforts to identify decision-support tools that use input variables measuring race, colour, national origin, sex, age or disability, and mitigate the discrimination risk. A race-blind cost model has no such input, so the duty is not triggered by this case, even though the harm is the one the rule targets.", "src": ["hhs1557", "ocr2025"] },
+          "2027": { "m": "p", "t": "Unchanged", "d": "No pending change to §92.210 was found; the input-based trigger remains.", "src": ["hhs1557"] }
+        },
+        "eu": {
+          "2019": { "m": "n", "t": "None", "d": "No AI-specific bias-testing duty.", "src": [] },
+          "2026": { "m": "p", "t": "Bias data now permitted", "d": "New Art 4a (in force 27 July 2026) lets providers, and under narrower conditions deployers, process special-category data such as ethnicity to detect and correct bias. It replaces Art 10(5). Testing duties under Arts 9–10 are not yet applicable to Annex III systems.", "src": ["omnibus2026"] },
+          "2027": { "m": "p", "t": "Arts 9–10, if high-risk", "d": "From 2 December 2027, providers of Annex III systems must run risk management and examine data for biases likely to lead to prohibited discrimination (Art 10(2)(f)–(g)). This applies only if the use is high-risk; see row 1.", "src": ["euaiact", "omnibus2026"] }
+        },
+        "in": {
+          "2019": { "m": "n", "t": "None", "d": "No duty.", "src": [] },
+          "2026": { "m": "n", "t": "ICMR principle only", "d": "ICMR 2023 names non-discrimination and fairness and validity as principles, and asks for diverse training data, but it is guidance.", "src": ["icmr2023"] },
+          "2027": { "m": "p", "t": "Rule 13, if SDF", "d": "From about 13 May 2027, Significant Data Fiduciaries must verify that technical measures, including algorithmic software, are not likely to pose a risk to Data Principals' rights (Rule 13(3)). A hospital is covered only if the government designates it as an SDF. Section 8(3) requires data used for decisions to be accurate, but cost data are accurate; the problem is what they are used to stand for.", "src": ["dpdprules2025", "dpdp2023"] }
+        }
+      }
+    },
+    {
+      "key": "transparency",
+      "label": "Vendor transparency (label, performance)",
+      "cells": {
+        "us": {
+          "2019": { "m": "n", "t": "None", "d": "Vendors had no duty to disclose the training label or subgroup performance to deployers.", "src": [] },
+          "2026": { "m": "p", "t": "HTI-1, certified EHRs only", "d": "HTI-1 (§170.315(b)(11)) requires certified health-IT developers to expose source attributes for predictive decision-support tools they supply, including intended use and fairness testing. It does not bind a separate analytics vendor or payer tool. The HTI-5 proposal (Dec 2025, not final) would remove these source-attribute requirements.", "src": ["hti1", "hti5"] },
+          "2027": { "m": "p", "t": "At risk", "d": "If HTI-5 is finalised as proposed, even the certified-EHR disclosure requirement disappears.", "src": ["hti5"] }
+        },
+        "eu": {
+          "2019": { "m": "n", "t": "None", "d": "No product-level transparency duty for non-device software.", "src": [] },
+          "2026": { "m": "n", "t": "Not yet applicable", "d": "Art 13 instructions for use apply to Annex III systems only from 2 December 2027. The cost model is probably not a medical device under MDR Rule 11, so device documentation duties do not apply.", "src": ["euaiact", "mdr2017"] },
+          "2027": { "m": "p", "t": "Art 13, if high-risk", "d": "Providers of high-risk systems must supply instructions covering intended purpose, accuracy and performance for specific groups.", "src": ["euaiact"] }
+        },
+        "in": {
+          "2019": { "m": "n", "t": "None", "d": "No duty.", "src": [] },
+          "2026": { "m": "p", "t": "Only if a medical device", "d": "Under the Medical Devices Rules 2017, CDSCO's July 2026 software guidance asks for training-data composition, bias evidence and an algorithm change protocol. That applies only to software that qualifies as a medical device, which a cost-based enrolment score probably does not, and the guidance is advisory.", "src": ["cdsco2026"] },
+          "2027": { "m": "p", "t": "Only if a medical device", "d": "No change scheduled.", "src": ["cdsco2026"] }
+        }
+      }
+    },
+    {
+      "key": "oversight",
+      "label": "Human oversight of decisions",
+      "cells": {
+        "us": {
+          "2019": { "m": "n", "t": "None", "d": "No duty. FDA's device criteria value clinician review, but only to decide whether software is regulated, not as an obligation.", "src": ["fda_cds"] },
+          "2026": { "m": "n", "t": "None", "d": "No general duty. FDA's revised CDS guidance (January 2026) is silent on population-level risk scores and bias.", "src": ["fda_cds"] },
+          "2027": { "m": "n", "t": "None", "d": "Colorado SB 26-189 centres on notice and explanation rather than mandated human review.", "src": ["colorado"] }
+        },
+        "eu": {
+          "2019": { "m": "p", "t": "GDPR Art 22", "d": "Individuals may not be subject to decisions based solely on automated processing with significant effects. Clinician review of referrals likely took this case outside the 'solely automated' test in 2019.", "src": ["gdpr"] },
+          "2026": { "m": "p", "t": "Art 22 after SCHUFA", "d": "The CJEU held in SCHUFA (C-634/21) that producing a score is itself an automated decision where a third party draws strongly on it. A score that effectively decides enrolment may now fall within Art 22, requiring human intervention and the right to contest.", "src": ["schufa2023", "gdpr"] },
+          "2027": { "m": "p", "t": "+ AI Act Arts 14, 26", "d": "For high-risk systems, deployers must assign competent human oversight and monitor operation.", "src": ["euaiact"] }
+        },
+        "in": {
+          "2019": { "m": "n", "t": "None", "d": "No duty.", "src": [] },
+          "2026": { "m": "n", "t": "Guidance only", "d": "ICMR 2023's autonomy principle asks that clinicians stay in control of decisions; it is not binding.", "src": ["icmr2023"] },
+          "2027": { "m": "n", "t": "None", "d": "The DPDP framework contains no right concerning automated decisions.", "src": ["dpdp2023"] }
+        }
+      }
+    },
+    {
+      "key": "notice",
+      "label": "Notice & explanation to patients",
+      "cells": {
+        "us": {
+          "2019": { "m": "n", "t": "None", "d": "Patients had no right to know an algorithm had ranked them.", "src": [] },
+          "2026": { "m": "n", "t": "None in force", "d": "California's AB 3030 covers generative-AI patient communications only. Colorado's notice duties start in 2027.", "src": ["colorado"] },
+          "2027": { "m": "p", "t": "Colorado, if enforced", "d": "From 1 January 2027, SB 26-189 requires notice and explanation for consequential automated decisions, including access to health care. Enforcement is stayed by agreement pending xAI v. Weiser, and EO 14365 targets such laws.", "src": ["colorado", "eo14365"] }
+        },
+        "eu": {
+          "2019": { "m": "p", "t": "GDPR Arts 13–15", "d": "Data subjects must be told about processing and, in Art 22 cases, given meaningful information about the logic involved.", "src": ["gdpr"] },
+          "2026": { "m": "p", "t": "GDPR Arts 13–15, 22", "d": "As in 2019, with SCHUFA widening when the Art 22 information duty applies.", "src": ["gdpr", "schufa2023"] },
+          "2027": { "m": "p", "t": "+ Arts 26(11), 86", "d": "Deployers must inform people subject to high-risk decisions, and Art 86 gives a right to an explanation of the AI system's role.", "src": ["euaiact"] }
+        },
+        "in": {
+          "2019": { "m": "n", "t": "None", "d": "No duty.", "src": [] },
+          "2026": { "m": "n", "t": "Not yet in force", "d": "DPDP notice duties (Rule 3) commence about 13 May 2027.", "src": ["dpdprules2025"] },
+          "2027": { "m": "p", "t": "DPDP s.5 notice", "d": "Notice must describe the personal data and the purpose of processing, not the use of an algorithm to rank patients.", "src": ["dpdp2023", "dpdprules2025"] }
+        }
+      }
+    },
+    {
+      "key": "monitoring",
+      "label": "Post-deployment monitoring",
+      "cells": {
+        "us": {
+          "2019": { "m": "n", "t": "None", "d": "No duty.", "src": [] },
+          "2026": { "m": "p", "t": "§92.210 ongoing, inputs only", "d": "The identification duty in §92.210(b) is ongoing, but it is limited to tools with protected-trait inputs.", "src": ["hhs1557"] },
+          "2027": { "m": "p", "t": "Unchanged", "d": "No change found.", "src": ["hhs1557"] }
+        },
+        "eu": {
+          "2019": { "m": "n", "t": "None", "d": "No duty for non-device software.", "src": [] },
+          "2026": { "m": "n", "t": "Not yet applicable", "d": "Deployer monitoring (Art 26(5)) and provider post-market monitoring (Art 72) apply to Annex III systems from December 2027.", "src": ["omnibus2026"] },
+          "2027": { "m": "p", "t": "Arts 26(5), 72, if high-risk", "d": "Deployers monitor and report risks; providers run post-market monitoring.", "src": ["euaiact"] }
+        },
+        "in": {
+          "2019": { "m": "n", "t": "None", "d": "No duty.", "src": [] },
+          "2026": { "m": "p", "t": "Only if a medical device", "d": "Post-market surveillance under the Medical Devices Rules 2017 applies to device software only.", "src": ["cdsco2026"] },
+          "2027": { "m": "p", "t": "Rule 13 audit, if SDF", "d": "Annual audit for Significant Data Fiduciaries.", "src": ["dpdprules2025"] }
+        }
+      }
+    },
+    {
+      "key": "dpia",
+      "label": "Data-protection impact assessment",
+      "cells": {
+        "us": {
+          "2019": { "m": "n", "t": "None", "d": "HIPAA's risk analysis covers security of health information, not fairness of its use.", "src": [] },
+          "2026": { "m": "n", "t": "None", "d": "No change.", "src": [] },
+          "2027": { "m": "n", "t": "None", "d": "No change scheduled.", "src": [] }
+        },
+        "eu": {
+          "2019": { "m": "y", "t": "GDPR Art 35", "d": "A DPIA is mandatory for large-scale processing of health data (Art 35(3)(b)) and for systematic evaluation that produces significant effects (Art 35(3)(a)). It must assess risks to rights and freedoms, which includes discrimination. This is the one EU duty that applied in 2019.", "src": ["gdpr"] },
+          "2026": { "m": "y", "t": "GDPR Art 35", "d": "Unchanged. GDPR amendments proposed in the 2025 digital omnibus package were still in the legislative process.", "src": ["gdpr"] },
+          "2027": { "m": "y", "t": "GDPR Art 35", "d": "Unchanged, and usable as the base for an AI Act FRIA.", "src": ["gdpr", "euaiact"] }
+        },
+        "in": {
+          "2019": { "m": "n", "t": "None", "d": "No data-protection statute.", "src": [] },
+          "2026": { "m": "n", "t": "Not yet in force", "d": "DPDP Act enacted 2023; Rule 13 duties start about 13 May 2027.", "src": ["dpdp2023", "dpdprules2025"] },
+          "2027": { "m": "p", "t": "Rule 13, if SDF", "d": "Annual DPIA for Significant Data Fiduciaries only.", "src": ["dpdprules2025"] }
+        }
+      }
+    },
+    {
+      "key": "liability",
+      "label": "Liability for proxy (indirect) discrimination",
+      "cells": {
+        "us": {
+          "2019": { "m": "p", "t": "Title VI effects rule", "d": "HHS's Title VI regulations (45 CFR 80.3(b)(2)) prohibited criteria with discriminatory effects in federally funded programmes, enforceable by HHS though not by private suit (Alexander v. Sandoval). New York regulators also relied on state law to challenge Impact Pro.", "src": ["sandoval2001", "dfs2019"] },
+          "2026": { "m": "x", "t": "Effects rule removed", "d": "EO 14281 told agencies to deprioritise disparate-impact enforcement, and HHS removed 80.3(b)(2) effective 24 July 2026. Section 92.210(a) still prohibits discrimination through decision-support tools, but for race it is read through Title VI standards. Our inference: the main federal route against a race-blind proxy has narrowed since 2019.", "src": ["eo14281", "hhs_tvi2026", "hhs1557"] },
+          "2027": { "m": "x", "t": "Effects rule removed", "d": "No restoration scheduled.", "src": ["hhs_tvi2026"] }
+        },
+        "eu": {
+          "2019": { "m": "y", "t": "Race Equality Directive", "d": "Directive 2000/43/EC prohibits indirect discrimination: an apparently neutral criterion that puts people of a racial or ethnic origin at a particular disadvantage without objective justification. It explicitly covers healthcare (Art 3(1)(e)).", "src": ["red2000"] },
+          "2026": { "m": "y", "t": "Race Equality Directive", "d": "Unchanged.", "src": ["red2000"] },
+          "2027": { "m": "y", "t": "Race Equality Directive", "d": "Unchanged.", "src": ["red2000"] }
+        },
+        "in": {
+          "2019": { "m": "p", "t": "Arts 14–15, State only", "d": "Constitutional equality and non-discrimination bind the State: public hospitals and public insurance schemes. There is no statute on indirect discrimination in private healthcare.", "src": [] },
+          "2026": { "m": "p", "t": "Arts 14–15, State only", "d": "Unchanged. PM-JAY and state schemes, as State action, could be challenged; private hospitals largely cannot.", "src": [] },
+          "2027": { "m": "p", "t": "Arts 14–15, State only", "d": "Unchanged.", "src": [] }
+        }
+      }
+    }
+  ],
+  "verdicts": [
+    {
+      "key": "us",
+      "label": "United States",
+      "answer": "No, and weaker than in 2019 on proxy discrimination.",
+      "text": "The 2024 Section 1557 rule names the right harm but targets the wrong mechanism: it looks for protected traits among a tool's <em>inputs</em>, so a cost label slips past it. The one state law that required impact assessments was replaced before it took effect, and the disparate-impact regulations that reached neutral criteria were removed in July 2026."
+    },
+    {
+      "key": "eu",
+      "label": "European Union",
+      "answer": "Partly. The DPIA and equality law apply now; AI duties arrive in Dec 2027.",
+      "text": "A GDPR DPIA would have forced the question in 2019, and the Race Equality Directive makes the outcome unlawful unless justified. The AI Act's bias examination and FRIA are the closest match to our AIA, but after the Omnibus they start on 2 December 2027 and probably reach only public bodies."
+    },
+    {
+      "key": "in",
+      "label": "India",
+      "answer": "No binding duty until 2027, and then only for designated fiduciaries.",
+      "text": "India has the most complete set of <em>principles</em> (ICMR 2023, NITI 2021, MeitY 2025) and the fewest binding duties. DPDP Rule 13's algorithmic due diligence is the first hard hook. It starts in May 2027 and only for Significant Data Fiduciaries."
+    }
+  ]
+}

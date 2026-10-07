@@ -1,0 +1,103 @@
+{
+  "framework": "Seven-gate pre-deployment AIA for population-health risk tools",
+  "sources": ["canada_dadm", "ada2022", "booth2021", "nist2023", "euaiact"],
+  "gates": [
+    {
+      "id": "G0",
+      "name": "Inventory & intended use",
+      "question": "What decision does the tool inform, for whom, at what capacity, and what exactly does it predict?",
+      "evidence": "Vendor documentation stating the label, features, training population and intended use; local decision map.",
+      "criterion": "The label and intended use are written down and match. A mismatch (predicts cost, used for need) is flagged for G1.",
+      "hooks": "45 CFR 92.210(b); EU AI Act Arts 13, 26; Bias Playbook step 1",
+      "decisive": false,
+      "retro": {
+        "verdict": "partial",
+        "note": "The vendor's label (cost) was known, but the mismatch with the programme's purpose (need) was never flagged."
+      }
+    },
+    {
+      "id": "G1",
+      "name": "Label validity",
+      "question": "Does the training target measure the construct of interest equally well across groups?",
+      "evidence": "Mean need (active chronic conditions, biomarkers) by score percentile and group; within-percentile gap with 95% CI, especially in the threshold band.",
+      "criterion": "Upper 95% bound of the need gap in the selection band below 0.25 conditions, or relative gap under 5%.",
+      "hooks": "EU AI Act Art 10(2)(f)–(g); ICMR principle of validity; NIST AI RMF MEASURE 2.11",
+      "decisive": true,
+      "retro": {
+        "verdict": "failed",
+        "note": "Selection band: Black patients carry about 1.4 more conditions (+27%). Within-percentile gap 0.61 (CI 0.56–0.67)."
+      }
+    },
+    {
+      "id": "G2",
+      "name": "Disparity testing",
+      "question": "At the operating threshold, who is selected compared with who is truly high-need, by race, sex, age, insurance and language?",
+      "evidence": "Representation ratio, recall and precision against a capacity-matched need group; sensitivity to the definition of need.",
+      "criterion": "Representation ratio of at least 0.9 for every group, and no group held to a visibly higher bar (precision gap under 10 points).",
+      "hooks": "45 CFR 92.210(c); EU AI Act Art 4a (bias data); DPDP Act s.8(3)",
+      "decisive": false,
+      "retro": {
+        "verdict": "not-performed",
+        "note": "Our test gives a representation ratio of 0.80 at the 97th percentile. Selected Black patients are high-need 47% of the time, against 33% for White patients."
+      }
+    },
+    {
+      "id": "G3",
+      "name": "Rights & stakeholder review",
+      "question": "Who could be harmed, how badly, and can it be reversed? What do affected patients and clinicians say?",
+      "evidence": "Fundamental-rights / data-protection impact assessment; patient and community panel; impact level I–IV.",
+      "criterion": "Panel held, impact level assigned, and its requirements adopted (Level III–IV for this tool).",
+      "hooks": "EU AI Act Art 27 (FRIA); GDPR Art 35 (DPIA); DPDP Rules r.13",
+      "decisive": false,
+      "retro": {
+        "verdict": "not-performed",
+        "note": "No record of patient engagement or a rights assessment before deployment."
+      }
+    },
+    {
+      "id": "G4",
+      "name": "Mitigation & oversight design",
+      "question": "What changes reduce the harm, and does human review actually correct the tool?",
+      "evidence": "Label blend evaluated on the fairness–cost frontier; override protocol; audit of clinician decisions by group; automation-bias training.",
+      "criterion": "G1 and G2 pass after mitigation; enrolled patients equally sick across groups.",
+      "hooks": "EU AI Act Arts 14, 26(2); Colorado SB 26-189 human review",
+      "decisive": false,
+      "retro": {
+        "verdict": "partial",
+        "note": "Clinician review existed but did not correct the bias: enrolled Black patients had 1.24 more conditions."
+      }
+    },
+    {
+      "id": "G5",
+      "name": "Go / no-go & publication",
+      "question": "Who signs off, on what evidence, and what is made public?",
+      "evidence": "Signed decision by an accountable executive; public summary of the AIA; entry in an algorithm register.",
+      "criterion": "Named accountable owner; summary published before launch.",
+      "hooks": "Canada DADM publication duty; EU AI Act Art 49 registration",
+      "decisive": false,
+      "retro": {
+        "verdict": "not-performed",
+        "note": "No public assessment or named accountable owner."
+      }
+    },
+    {
+      "id": "G6",
+      "name": "Monitoring & re-assessment",
+      "question": "How will drift, complaints and new evidence trigger a re-run of G1–G2?",
+      "evidence": "Quarterly calibration-by-group dashboard; incident log; re-assessment triggers (new population, new threshold, new vendor version).",
+      "criterion": "G1–G2 re-run at least annually and on every trigger; results reported to the governance committee.",
+      "hooks": "45 CFR 92.210 (ongoing); EU AI Act Art 26(5), Art 72",
+      "decisive": false,
+      "retro": {
+        "verdict": "not-performed",
+        "note": "Bias found by external researchers in 2019, not by internal monitoring."
+      }
+    }
+  ],
+  "impact_levels": [
+    { "level": "I", "label": "Little to no impact", "requires": "Plain-language notice" },
+    { "level": "II", "label": "Moderate impact", "requires": "Notice, peer review or expert consultation, explanation on request" },
+    { "level": "III", "label": "High impact", "requires": "Peer review, published AIA, human makes the final decision, ongoing monitoring" },
+    { "level": "IV", "label": "Very high impact", "requires": "All of Level III plus two independent reviews and executive sign-off" }
+  ]
+}
