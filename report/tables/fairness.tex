@@ -1,0 +1,27 @@
+\begin{table}[t]
+\centering
+\caption{Selection fairness at the 97th percentile under three definitions of high need. Rep.\ ratio: Black share selected $\div$ Black share of high-need. PPV: share of selected patients who are high-need.}
+\label{tab:fairness}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Ranking & Rep.\ ratio & PPV\textsubscript{B} & PPV\textsubscript{W} & TPR\textsubscript{B}/TPR\textsubscript{W} \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{High need: Top 3\% by conditions}} \\
+\quad Commercial & 0.80 & 47\% & 33\% & 1.07 \\
+\quad Total cost & 0.76 & 51\% & 34\% & 1.05 \\
+\quad Avoid.\ cost & 1.03 & 58\% & 54\% & 1.12 \\
+\quad Conditions & 1.13 & 66\% & 69\% & 1.13 \\
+\multicolumn{5}{@{}l}{\textit{High need: $\geq$3 conditions}} \\
+\quad Commercial & 1.09 & 89\% & 73\% & 1.35 \\
+\quad Total cost & 1.04 & 87\% & 71\% & 1.28 \\
+\quad Avoid.\ cost & 1.41 & 91\% & 90\% & 1.58 \\
+\quad Conditions & 1.54 & 93\% & 91\% & 1.79 \\
+\multicolumn{5}{@{}l}{\textit{High need: HbA1c$\geq$9 or SBP$\geq$140}} \\
+\quad Commercial & 1.21 & 36\% & 20\% & 2.23 \\
+\quad Total cost & 1.15 & 41\% & 20\% & 2.39 \\
+\quad Avoid.\ cost & 1.56 & 45\% & 27\% & 2.88 \\
+\quad Conditions & 1.70 & 45\% & 28\% & 3.13 \\
+\bottomrule
+\end{tabular}
+\end{table}

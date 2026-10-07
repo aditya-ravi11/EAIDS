@@ -1,0 +1,21 @@
+\begin{table}[t]
+\centering
+\caption{Replication fidelity: published values on the real cohort~\cite{obermeyer2019} and our values on the synthetic release~\cite{labsysmed}.}
+\label{tab:fidelity}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Quantity & Published & This work \\
+\midrule
+Patient-years & 100,009 & 48,784 (synthetic) \\
+Black share, $\geq$97th pct. & 17.7\% & 20.0\% \\
+Conditions $\geq$97th, B vs W & 4.8 vs 3.8 & 6.6 vs 5.2 \\
+Cost gap at equal health & $-$\$1{,}801 & $-$\$734 \\
+Swap, original code & 17.7$\rightarrow$46.5\% & 18.4\%$\rightarrow$44.8\% \\
+Swap, corrected code & $\rightarrow$59\% & $\rightarrow$59.2\% \\
+Top 3\% Black, cost label & 14.1\% & 19.0\% \\
+Top 3\% Black, avoidable cost & 21.0\% & 25.8\% \\
+Top 3\% Black, conditions & 26.7\% & 28.2\% \\
+\bottomrule
+\end{tabular}
+\end{table}

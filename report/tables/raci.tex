@@ -1,0 +1,23 @@
+\begin{table}[t]
+\centering
+\caption{Accountability matrix (R responsible, A accountable, C consulted, I informed). Gov.: hospital AI governance; DS: hospital data science; Clin.: clinicians; Eq.: equity officer; Pat.: patients.}
+\label{tab:raci}
+\scriptsize
+\setlength{\tabcolsep}{1.6pt}
+\begin{tabular}{@{}lcccccccc@{}}
+\toprule
+Activity & Vend. & Gov. & DS & Clin. & Eq. & Payer & Pat. & Reg. \\
+\midrule
+Choose the model's label & \textbf{A/R} & C & C & I & C & C & I & I \\
+Disclose label \& subgroup performance & \textbf{A/R} & I & C & I & I & I & I & I \\
+Local label-validity \& bias audit (G1--G2) & C & \textbf{A} & R & C & R & I & I & I \\
+Set threshold \& capacity & C & \textbf{A} & R & C & C & C & I & I \\
+Approve deployment (G5) & I & \textbf{A/R} & C & C & C & I & C & I \\
+Review \& override referrals & I & \textbf{A} & I & R & C & I & I & I \\
+Monitor \& report incidents (G6) & C & \textbf{A} & R & R & C & I & I & I \\
+Retrain or replace the model & R & \textbf{A} & R & I & C & C & I & I \\
+Patient notice \& complaints & I & \textbf{A} & I & R & R & I & C & I \\
+Set \& enforce the legal floor & I & I & I & I & I & I & C & \textbf{A/R} \\
+\bottomrule
+\end{tabular}
+\end{table}
