@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Project Explanation · From Audit to Accountability</title>
+    <meta name="description" content="A three-page explanation of the EAIDS mini-project: what we did, what we found, and how to demo it." />
+    <script type="module" src="/src/explainer.ts"></script>
+  </head>
+  <body>
+    <article class="doc">
+      <!-- PAGE 1 ========================================================== -->
+      <header class="mast">
+        <p class="eyebrow">Mini-project explanation · Ethics of AI &amp; Data Science · Group 2 · Batch B2</p>
+        <h1>From Audit to <em>Accountability</em></h1>
+        <p class="sub">An algorithmic impact assessment and regulatory review of cost-as-a-proxy healthcare algorithms</p>
+        <div class="mast-grid">
+          <table class="team">
+            <tbody>
+              <tr><td>Aditya Ravi</td><td>16014223004</td></tr>
+              <tr><td>Aayush Tiwari</td><td>16014223003</td></tr>
+              <tr><td>Atharva Indulkar</td><td>16014223022</td></tr>
+            </tbody>
+          </table>
+          <dl class="links">
+            <dt>Dashboard</dt><dd><a href="https://aditya-ravi11.github.io/EAIDS/">aditya-ravi11.github.io/EAIDS</a></dd>
+            <dt>Code</dt><dd><a href="https://github.com/aditya-ravi11/EAIDS">github.com/aditya-ravi11/EAIDS</a></dd>
+            <dt>Report</dt><dd><a href="https://github.com/aditya-ravi11/EAIDS/blob/main/report/MiniProject_EAIDS_Group2.pdf">report/MiniProject_EAIDS_Group2.pdf</a></dd>
+          </dl>
+        </div>
+      </header>
+
+      <section>
+        <h2><span>1</span>The project in one paragraph</h2>
+        <p class="lede">
+          Hospitals in the United States use commercial risk scores to decide which patients get extra care. A widely
+          used score predicted next year's <em>medical cost</em> and treated it as a measure of <em>health need</em>. In 2019,
+          Obermeyer and colleagues showed in <em>Science</em> that this under-refers Black patients. We take that finding
+          from <strong>audit</strong> to <strong>accountability</strong>: (1) we reproduce the audit on the authors' public
+          synthetic data, (2) we show that the training <em>label</em> causes the bias, (3) we design the impact
+          assessment and accountability structure a hospital should have used, and (4) we test whether US, EU and Indian
+          law in 2026 would require it. One reproducible pipeline feeds an interactive dashboard, an IEEE-format report
+          and this explanation.
+        </p>
+      </section>
+
+      <section>
+        <h2><span>2</span>The problem, in plain words</h2>
+        <div class="two">
+          <div>
+            <p>
+              Imagine choosing which students get free extra tutoring by ranking them on <em>how much their families
+              spent on tuition last year</em>. Students who struggled but could not afford tuition would look like they
+              needed no help, and they would be passed over again.
+            </p>
+            <p>
+              The hospital score worked the same way. Patients at or above the 97th percentile were automatically
+              identified for a care-management programme, and those above the 55th were referred to their doctor.
+              Black patients receive less care at the same level of illness, because of unequal access, so they
+              generate less cost. The score therefore ranked them as <strong>healthier than they were</strong>. Race was
+              never an input; the bias came entirely from the choice of what to predict.
+            </p>
+          </div>
+          <aside class="callbox">
+            <b>At the same risk score</b>
+            <div class="big is-black" data-num="calibration.gap_health.est" data-fmt="signed2"></div>
+            <p>more chronic conditions for Black patients than White patients (95% CI <span data-num="calibration.gap_health.lo" data-fmt="num2"></span>–<span data-num="calibration.gap_health.hi" data-fmt="num2"></span>)</p>
+            <div class="big" data-num="mechanism.gap_cost.est" data-fmt="usdneg"></div>
+            <p>spent a year on a Black patient compared with an equally sick White patient</p>
+          </aside>
+        </div>
+      </section>
+
+      <section>
+        <h2><span>3</span>What we did</h2>
+        <table class="t stages">
+          <thead><tr><th>Stage</th><th>Question</th><th>Method</th></tr></thead>
+          <tbody>
+            <tr>
+              <th>A · Audit</th>
+              <td>Is the score fair on health, not just on cost?</td>
+              <td>Calibration by score percentile and race. OLS with percentile fixed effects and 1,000-draw bootstrap intervals. Biomarker checks. Re-implementation of the authors' counterfactual "swap", with and without their 2022 bug fix.</td>
+            </tr>
+            <tr>
+              <th>B · Label test</th>
+              <td>Is it the label or the model?</td>
+              <td>The same LASSO model on the same <span data-num="labels.n_features" data-fmt="int"></span> features, trained on three labels: total cost, avoidable cost, chronic conditions. Then a blended-label frontier (α × cost + (1 − α) × health).</td>
+            </tr>
+            <tr>
+              <th>C · Governance</th>
+              <td>What should the hospital have done?</td>
+              <td>A seven-gate algorithmic impact assessment (G0–G6) built from Canada's DADM, the Ada Lovelace NHS pilot, the Bias Playbook and NIST AI RMF. An accountability (RACI) matrix across eight actors.</td>
+            </tr>
+            <tr>
+              <th>D · Law</th>
+              <td>Would the law require that assessment?</td>
+              <td>Eight obligations × US / EU / India × Oct 2019, Oct 2026 and Dec 2027, each cell coded from primary sources (Federal Register, EUR-Lex, Gazette of India).</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="note">Data: the synthetic cohort released with the original study (<span data-num="meta.n" data-fmt="int"></span> patient-years, <span data-num="meta.share_black" data-fmt="pct1"></span> Black). It preserves the structure of the real data but not its exact magnitudes, so published values are always shown alongside ours.</p>
+      </section>
+
+      <!-- PAGE 2 ========================================================== -->
+      <section>
+        <h2><span>4</span>What we found</h2>
+        <ol class="findings">
+          <li><strong>The bias replicates exactly.</strong> Run with the authors' original logic, our code reproduces their published synthetic output to four decimal places (<span data-num="swap.at97.before" data-fmt="pct1"></span> → <span data-num="swap.at97.buggy" data-fmt="pct1"></span>). With their 2022 fix, the Black share of the auto-identified group rises to <span data-num="swap.at97.fixed" data-fmt="pct1"></span>.</li>
+          <li><strong>The label, not the model, causes it.</strong> The Black share of the top 3% is <span data-num="labels.rows.1.black_share" data-fmt="pct1"></span> with a cost label, <span data-num="labels.rows.2.black_share" data-fmt="pct1"></span> with avoidable cost, and <span data-num="labels.rows.3.black_share" data-fmt="pct1"></span> with chronic conditions. The health label closes <span data-num="labels.rows.3.excess_reduction" data-fmt="pct0"></span> of the excess-illness gap.</li>
+          <li><strong>The fix is cheap.</strong> A 60/40 cost/health blend captures the same share of spending as the cost-only model (<span data-num="blend.rows.12.k3.cost" data-fmt="pct1"></span>). It raises the Black share to <span data-num="blend.rows.12.k3.black" data-fmt="pct1"></span> and closes <span data-num="blend.rows.12.excess_reduction" data-fmt="pct0"></span> of the gap.</li>
+          <li><strong>Human review did not fix it.</strong> Enrolled Black patients were still <span data-num="human.conditions_gap.est" data-fmt="num2"></span> chronic conditions sicker than enrolled White patients.</li>
+          <li><strong>One gate would have caught it.</strong> The deployment fails our decisive gate G1 (label validity), a test that needs only data the hospital already holds.</li>
+          <li><strong>No jurisdiction clearly requires that gate today.</strong>
+            <ul>
+              <li><b>US:</b> rules are keyed to a tool's <em>inputs</em>, not its label, and disparate-impact protection narrowed in July 2026.</li>
+              <li><b>EU:</b> a GDPR DPIA and the Race Equality Directive apply now, but AI Act duties start in December 2027 and probably reach only public bodies.</li>
+              <li><b>India:</b> guidance is voluntary until DPDP duties begin in May 2027, and then they apply only to designated fiduciaries.</li>
+            </ul>
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2><span>5</span>How the deliverables fit together</h2>
+        <div class="flow">
+          <div><b>Data</b>Synthetic cohort, fetched by <code>fetch_data.py</code> (never redistributed)</div>
+          <div><b>Pipeline</b><code>analysis/run_all.py</code>: audit, label models, figures, LaTeX tables, BibTeX</div>
+          <div><b>Shared output</b>JSON numbers + curated legal content in <code>content/*.json</code></div>
+          <div class="split2"><span><b>Dashboard</b>Vite, TypeScript, D3 → GitHub Pages</span><span><b>Report</b>IEEEtran LaTeX → PDF</span></div>
+        </div>
+        <p class="note">Every number on the dashboard and in the report comes from the same pipeline, so the two cannot disagree. Re-running <code>python analysis/run_all.py</code> regenerates the site data, all figures and all report tables.</p>
+      </section>
+
+      <section>
+        <h2><span>6</span>Demo walkthrough (about 7 minutes)</h2>
+        <p class="keys"><kbd>→</kbd>/<kbd>←</kbd> next / previous · <kbd>1</kbd>–<kbd>9</kbd> jump to a section · <kbd>P</kbd> present full-screen · <kbd>N</kbd> open details · <kbd>Esc</kbd> close. Every view also has its own link, e.g. <code>#/analysis/explorer</code>.</p>
+        <table class="t demo">
+          <thead><tr><th>#</th><th>Screen</th><th>Do</th><th>Say</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Cover</td><td>Toggle <em>Rank by cost / health</em></td><td>"20 of 100 places go to Black patients under the cost score; 28 if the same model predicted illness."</td></tr>
+            <tr><td>2</td><td>§01 Problem</td><td>Point at the red pipeline step</td><td>"Race is not an input. The bias sits in one design choice: the label."</td></tr>
+            <tr><td>3</td><td>§03 Background</td><td>Hover two or three timeline items</td><td>"Seven years of rules: several were delayed, narrowed or repealed."</td></tr>
+            <tr><td>4</td><td>§05 Calibration</td><td>Switch <em>health ↔ cost</em></td><td>"Accurate on cost, wrong on health. That is why a vendor's check would miss it."</td></tr>
+            <tr><td>5</td><td>§05 Threshold explorer</td><td>Drag the slider; pick <em>Chronic conditions</em></td><td>"At every cut-off the cost label under-selects; the health label tracks need."</td></tr>
+            <tr><td>6</td><td>§05 Counterfactual</td><td>Point at 44.8% vs 59.2%</td><td>"We reproduced the original bug, then the fix: the finding gets stronger."</td></tr>
+            <tr><td>7</td><td>§07 Impact assessment</td><td>Click G1, then G2</td><td>"G1 alone would have stopped this tool; it is Level III–IV impact."</td></tr>
+            <tr><td>8</td><td>§07 Accountability</td><td>Click the <em>Hospital AI governance</em> column</td><td>"The vendor owns the label; the hospital is accountable for using it."</td></tr>
+            <tr><td>9</td><td>§08 Label mixer</td><td>Drag α to 0.60</td><td>"Same spending captured, +6.5 points Black share, 46% of the gap closed."</td></tr>
+            <tr><td>10</td><td>§08 Regulatory matrix</td><td>Toggle 2019 → 2026 → 2027; open the US liability cell</td><td>"In the US the main route against proxy bias was removed in July 2026."</td></tr>
+            <tr><td>11</td><td>§09 Answers → Thank you</td><td>Show the QR code</td><td>"Detection was never the hard part. The obligation to look was."</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- PAGE 3 ========================================================== -->
+      <section>
+        <h2><span>7</span>Questions we expect, and our answers</h2>
+        <dl class="qa">
+          <dt>Why use synthetic data? Are the results valid?</dt>
+          <dd>The real patient data cannot be shared. The authors released a synthetic replica that keeps the statistical structure. We validated against their own synthetic outputs: the counterfactual matches to four decimals and the label-choice shares match within 0.3 points. Magnitudes differ from the real cohort, which we always show side by side; the direction and approximate size of every effect replicate.</dd>
+          <dt>If race was never an input, how can the score be racially biased?</dt>
+          <dd>Because the <em>label</em> carries the disparity. Cost reflects both illness and access to care, and access differs by race. Leaving race out ("fairness through unawareness") did not remove the bias. It only made it harder to see.</dd>
+          <dt>Why not add race to the model to correct it?</dt>
+          <dd>Race-aware adjustments raise legal (disparate-treatment) and ethical problems, and they treat the symptom. The cleaner fix is to predict what the programme actually cares about: need, or a blend. Race data <em>is</em> needed for auditing, which is why we recommend collecting it under strict purpose limitation; the EU's new Article 4a now allows this.</dd>
+          <dt>Fairness metrics conflict with each other. Which one did you use?</dt>
+          <dd>The impossibility results (Kleinberg et al.; Chouldechova) mean no score satisfies every criterion. We judge the score on calibration against the <em>right target</em>, health need, and report representation and precision descriptively. The precision gap (47% vs 33% of selected patients being high-need) is robust across three definitions of need.</dd>
+          <dt>Who is responsible: the vendor or the hospital?</dt>
+          <dd>Both, in different ways. The vendor is responsible for the label and for disclosing it. The hospital is accountable, because it chose the tool, set the thresholds and used the score to ration care. Our RACI matrix gives exactly one accountable party per activity.</dd>
+          <dt>Why did human review not correct the bias?</dt>
+          <dd>Clinicians reviewed a list the score had already filtered, and at the same score they enrolled Black patients only 0.6 points more often. Without group-level audits of their decisions, review became a rubber stamp: automation bias.</dd>
+          <dt>What should India change?</dt>
+          <dd>Three things. Make ICMR's validity and fairness principles binding pre-deployment checks for hospital AI. Designate large health data fiduciaries as Significant Data Fiduciaries so that DPDP Rule 13's algorithm checks apply. Until then, have public insurers (bound by Articles 14–15) require a label-validity test in procurement. In India the same proxy would track caste, gender and rural access rather than race.</dd>
+        </dl>
+      </section>
+
+      <section>
+        <h2><span>8</span>Limitations</h2>
+        <ul class="tight">
+          <li>Synthetic data without patient IDs: intervals treat patient-years as independent.</li>
+          <li>Chronic-condition counts depend on diagnosis, which depends on access, so bias estimates are lower bounds.</li>
+          <li>"White" in the source data means all non-Black patients; race is treated as a social category acting through access.</li>
+          <li>The legal coding is our reading of primary sources as of 7 October 2026, not legal advice. Several instruments, including HTI-5, the Colorado litigation and the GDPR omnibus, were still changing.</li>
+        </ul>
+      </section>
+
+      <footer class="foot">
+        <span>EAIDS mini-project · Group 2 · Batch B2</span>
+        <span>Full method, tables and 45 references: report/MiniProject_EAIDS_Group2.pdf</span>
+      </footer>
+    </article>
+  </body>
+</html>
